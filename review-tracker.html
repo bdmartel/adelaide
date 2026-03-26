@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Adelaide — Kristen Review Action Items (2026-03-26)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #111114;
+    --surface: #1a1a1f;
+    --surface-hover: #222228;
+    --border: #2a2a32;
+    --text: #e0e0e6;
+    --text-dim: #888894;
+    --text-muted: #555560;
+    --amber: #d4a843;
+    --amber-dim: #a07e2f;
+    --amber-bg: rgba(212, 168, 67, 0.08);
+    --amber-border: rgba(212, 168, 67, 0.2);
+    --blue: #5b8ad4;
+    --blue-dim: #3d6ab3;
+    --blue-bg: rgba(91, 138, 212, 0.08);
+    --blue-border: rgba(91, 138, 212, 0.2);
+    --green: #5bbd72;
+    --green-dim: #3d9950;
+    --green-bg: rgba(91, 189, 114, 0.08);
+    --green-border: rgba(91, 189, 114, 0.2);
+    --check: #4ade80;
+    --in-progress: #f59e0b;
+    --in-progress-bg: rgba(245, 158, 11, 0.06);
+    --in-progress-border: rgba(245, 158, 11, 0.35);
+    --radius: 8px;
+  }
+
+  html { font-size: 15px; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 80px;
+  }
+
+  header { margin-bottom: 24px; }
+
+  h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .progress-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-dim);
+  }
+
+  .progress-stats {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .progress-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stat-done { color: var(--check); }
+  .stat-progress { color: var(--in-progress); }
+  .stat-total { color: var(--text-muted); }
+
+  .stat-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .stat-dot.done { background: var(--check); }
+  .stat-dot.progress { background: var(--in-progress); }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .progress-fill-done {
+    height: 100%;
+    background: var(--check);
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  .progress-fill-wip {
+    height: 100%;
+    background: var(--in-progress);
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  /* Action buttons row */
+  .actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:hover { background: var(--surface-hover); color: var(--text); }
+  .btn:active { transform: scale(0.97); }
+
+  .btn.copied {
+    border-color: var(--check);
+    color: var(--check);
+  }
+
+  .btn-share {
+    background: #1a2a3a;
+    border-color: #3a5a7a;
+  }
+
+  /* Category sections */
+  .category { margin-bottom: 16px; }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    margin-bottom: 4px;
+    cursor: default;
+  }
+
+  .category-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .category-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .category-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  .cat-print .category-dot { background: var(--amber); }
+  .cat-print .category-title { color: var(--amber); }
+
+  .cat-web .category-dot { background: var(--blue); }
+  .cat-web .category-title { color: var(--blue); }
+
+  .cat-delivery .category-dot { background: var(--green); }
+  .cat-delivery .category-title { color: var(--green); }
+
+  /* Items */
+  .item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 6px;
+    overflow: hidden;
+    transition: border-color 0.15s ease, opacity 0.15s ease, border-left 0.15s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .cat-print .item { border-color: var(--amber-border); border-left-color: transparent; }
+  .cat-web .item { border-color: var(--blue-border); border-left-color: transparent; }
+  .cat-delivery .item { border-color: var(--green-border); border-left-color: transparent; }
+
+  /* In-progress: amber left border */
+  .item.in-progress { border-left-color: var(--in-progress); background: var(--in-progress-bg); }
+
+  /* Done: muted + strikethrough */
+  .item.done { opacity: 0.45; }
+  .item.done .item-summary { text-decoration: line-through; text-decoration-color: var(--text-muted); }
+
+  .item-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 12px;
+    gap: 10px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .cat-print .item-row:hover { background: var(--amber-bg); }
+  .cat-web .item-row:hover { background: var(--blue-bg); }
+  .cat-delivery .item-row:hover { background: var(--green-bg); }
+
+  /* Status indicator (replaces checkbox) */
+  .status-indicator {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-top: 0px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Todo: empty circle */
+  .status-indicator.todo {
+    border: 2px solid var(--text-muted);
+    background: transparent;
+  }
+  .status-indicator.todo:hover {
+    border-color: var(--text-dim);
+  }
+
+  /* In progress: filled amber with pulse */
+  .status-indicator.wip {
+    border: 2px solid var(--in-progress);
+    background: var(--in-progress);
+  }
+
+  @keyframes pulse-wip {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+    50% { box-shadow: 0 0 0 5px rgba(245, 158, 11, 0); }
+  }
+
+  .status-indicator.wip {
+    animation: pulse-wip 2s ease-in-out infinite;
+  }
+
+  /* Done: green checkmark */
+  .status-indicator.complete {
+    border: 2px solid var(--check);
+    background: var(--check);
+  }
+
+  .status-indicator svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .item-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    width: 22px;
+    text-align: right;
+    margin-top: 2px;
+  }
+
+  .cat-print .item-num { color: var(--amber-dim); }
+  .cat-web .item-num { color: var(--blue-dim); }
+  .cat-delivery .item-num { color: var(--green-dim); }
+
+  .item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .item-summary {
+    font-size: 0.87rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .item-status-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .item-status-label.wip { color: var(--in-progress); }
+  .item-status-label.complete { color: var(--check); }
+
+  .item-actions { display: flex; gap: 4px; flex-shrink: 0; opacity: 0; transition: opacity 0.15s; }
+  .item:hover .item-actions, .item:focus-within .item-actions { opacity: 1; }
+  @media (max-width: 600px) { .item-actions { opacity: 1; } }
+  .action-btn { background: none; border: 1px solid var(--border); border-radius: 4px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-dim); transition: all 0.15s; }
+  .action-btn:hover { color: var(--text); border-color: var(--text-dim); }
+  .edit-btn:hover { color: #6ba3d6; border-color: #6ba3d6; }
+  .delete-btn:hover { color: #d66b6b; border-color: #d66b6b; }
+
+  .expand-btn {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+    margin-top: 0px;
+  }
+
+  .item.expanded .expand-btn { transform: rotate(90deg); }
+
+  .item-detail {
+    display: none;
+    padding: 0 12px 12px 54px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .item.expanded .item-detail { display: block; }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text);
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.25s ease;
+    pointer-events: none;
+  }
+
+  .toast.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .container { padding: 16px 12px 80px; }
+    h1 { font-size: 1.05rem; }
+    .item-row { padding: 9px 10px; gap: 8px; }
+    .item-detail { padding-left: 44px; }
+    .item-num { width: 20px; font-size: 0.68rem; }
+    .progress-stats { gap: 8px; }
+    .progress-stat { font-size: 0.68rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Adelaide — Kristen Review Action Items (2026-03-26)</h1>
+    <div class="subtitle">2026-03-26 &middot; 28 items</div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">Progress</span>
+      <div class="progress-stats">
+        <span class="progress-stat stat-done"><span class="stat-dot done"></span> <span id="doneCount">0</span> done</span>
+        <span class="progress-stat stat-progress"><span class="stat-dot progress"></span> <span id="wipCount">0</span> wip</span>
+        <span class="progress-stat stat-total">/ <span id="totalCount">28</span></span>
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill-done" id="progressDone"></div>
+      <div class="progress-fill-wip" id="progressWip"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="copyBtn" onclick="copyUnchecked()">Copy unchecked</button>
+    <button class="btn btn-share" id="shareBtn" onclick="shareLink()">Share link</button>
+    <button class="btn" onclick="addItem()" style="background:#2a4a2a;border-color:#4a7a4a;">+ Add item</button>
+    <button class="btn" id="expandAllBtn" onclick="toggleExpandAll()">Expand all</button>
+    <button class="btn" id="resetBtn" onclick="resetAll()">Reset all</button>
+  </div>
+
+  <div id="itemsContainer"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ITEMS = [
+  // PRINT -- Secondary Beverage Menu (Spirits) [6 items]
+  {
+    id: 1,
+    category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
+    catType: "print",
+    summary: "Vertically center page 1 content",
+    detail: "Page 1 content is currently too high/top-heavy. Vertically center the content on the page so it doesn\u2019t crowd the top."
+  },
+  {
+    id: 2,
+    category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
+    catType: "print",
+    summary: "Fix flipped margins on middle sections",
+    detail: "The middle two sections have the same margin but should be unique \u2014 the right side needs to be inset differently. Check that each section\u2019s margins are set correctly per the layout."
+  },
+  {
+    id: 3,
+    category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
+    catType: "print",
+    summary: "Increase spacing between brandy/rum/vodka sections",
+    detail: "Currently too tight \u2014 reads as one running list. Add div spacers between spirit sub-sections. Make spacing consistent between ALL spirit sub-sections across the page."
+  },
+  {
+    id: 4,
+    category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
+    catType: "print",
+    summary: "Fix price double-spacing (empty description padding)",
+    detail: "Items WITHOUT descriptions have extra space before the price. Worst on vodka where \u201c(18)\u201d floats to the right. Affects the spirits page AND the non-alcoholic page. Root cause: empty description field is still adding padding."
+  },
+  {
+    id: 5,
+    category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
+    catType: "print",
+    summary: "Verify all script font sizes match across pages",
+    detail: "Check script font sizes across all pages (white, red, ros\u00e9, whiskey, etc.). Whiskey page may be the outlier \u2014 compare it against the others."
+  },
+  {
+    id: 6,
+    category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
+    catType: "print",
+    summary: "Fix page numbering consistency",
+    detail: "Page 1 shows a page number but pages 2, 3, and 4 do not. Make page numbering consistent across all pages."
+  },
+  // PRINT -- Wines By The Bottle Page [2 items]
+  {
+    id: 7,
+    category: "PRINT \u2014 Wines By The Bottle Page",
+    catType: "print",
+    summary: "Widen body copy margin on red section",
+    detail: "Text is breaking too narrow \u2014 \u201c2022\u201d is orphaned on its own line. Use the sparkling section as reference for the correct width. OK to deviate from InDesign if needed."
+  },
+  {
+    id: 8,
+    category: "PRINT \u2014 Wines By The Bottle Page",
+    catType: "print",
+    summary: "Fix grommet margin on red section",
+    detail: "Move text further RIGHT (away from grommets). Use annotated measurements: 1.75\u201d from left edge for red section, 1.5\u201d from left edge for white section."
+  },
+  // PRINT -- Non-Alcoholic Page [3 items]
+  {
+    id: 9,
+    category: "PRINT \u2014 Non-Alcoholic Page",
+    catType: "print",
+    summary: "Fix double spacing on beers/soft drinks",
+    detail: "Same root cause as item #4 \u2014 empty description field adds padding. Also present on the spirits page. Fix the conditional spacing so items without descriptions don\u2019t get extra space."
+  },
+  {
+    id: 10,
+    category: "PRINT \u2014 Non-Alcoholic Page",
+    catType: "print",
+    summary: "Fix 3rd-line description spacing (line height)",
+    detail: "When a description wraps to 3 lines, the 3rd line is not equidistant from the 2nd. Also check Summer Squash entry: \u201ccornbread touching sheep\u2019s yogurt\u201d \u2014 verify the line height is consistent."
+  },
+  {
+    id: 11,
+    category: "PRINT \u2014 Non-Alcoholic Page",
+    catType: "print",
+    summary: "Soft drinks description option confirmed",
+    detail: "Confirmed soft drinks should be able to have descriptions (e.g., \u201cCoke with lime\u201d). This is already set up \u2014 just verify it works correctly."
+  },
+  // PRINT -- Cocktail Lounge Menu [2 items]
+  {
+    id: 12,
+    category: "PRINT \u2014 Cocktail Lounge Menu",
+    catType: "print",
+    summary: "Re-add sparkling collection list",
+    detail: "The sparkling collection list broke when the section name was changed to \u201csparkling / ros\u00e9\u201d. Re-add the collection list binding."
+  },
+  {
+    id: 13,
+    category: "PRINT \u2014 Cocktail Lounge Menu",
+    catType: "print",
+    summary: "Check 3-line description wrapping",
+    detail: "Same wrapping issue as other menus. Verify that wines-by-the-glass descriptions don\u2019t overflow their containers when they run to 3 lines."
+  },
+  // PRINT -- Food Menu [1 item]
+  {
+    id: 14,
+    category: "PRINT \u2014 Food Menu",
+    catType: "print",
+    summary: "Move raw food disclaimer to LEFT side",
+    detail: "The raw food disclaimer is currently on the wrong side. Move it to the LEFT side. Reference Kristen\u2019s design in the SecBev PDF for correct placement."
+  },
+  // WEB -- Food Page [3 items]
+  {
+    id: 15,
+    category: "WEB \u2014 Food Page",
+    catType: "web",
+    summary: "Add asterisk before \u201cSeasonal Desserts\u201d",
+    detail: "Should read \u201c*Seasonal Desserts available in-house\u201d \u2014 add the asterisk prefix to the text."
+  },
+  {
+    id: 16,
+    category: "WEB \u2014 Food Page",
+    catType: "web",
+    summary: "Fix footer pinching (desktop + mobile)",
+    detail: "Footer is positioned at zero to the bottom with no breathing room. Add proper spacing/padding below the content and above the footer on both desktop and mobile."
+  },
+  {
+    id: 17,
+    category: "WEB \u2014 Food Page",
+    catType: "web",
+    summary: "Fix left-justification on mobile",
+    detail: "Section titles are misaligned on the mobile food page. Fix the left-justification so titles align properly."
+  },
+  // WEB -- Beverage Page [4 items]
+  {
+    id: 18,
+    category: "WEB \u2014 Beverage Page",
+    catType: "web",
+    summary: "Rewrite corkage fee notice (typos + formatting)",
+    detail: "Missing spaces after \u201clist,\u201d, missing space before \u201cfor\u201d, and other typos. Remove the hard line break between title and description. Kristen is sending corrected text. Fix on BOTH desktop AND mobile."
+  },
+  {
+    id: 19,
+    category: "WEB \u2014 Beverage Page",
+    catType: "web",
+    summary: "Fix section title alignment on mobile",
+    detail: "Wine sub-headings (sparkling, red, white) and section titles are left-justified incorrectly on the mobile beverage page."
+  },
+  {
+    id: 20,
+    category: "WEB \u2014 Beverage Page",
+    catType: "web",
+    summary: "Fix footer on mobile (same pinching issue)",
+    detail: "Same footer pinching issue as the food page \u2014 needs breathing room on mobile."
+  },
+  {
+    id: 21,
+    category: "WEB \u2014 Beverage Page",
+    catType: "web",
+    summary: "Ros\u00e9 with accent (\u00e9) everywhere",
+    detail: "Confirmed: use \u201cRos\u00e9\u201d with the accent. Make sure the script heading and any other references use the \u00e9 character."
+  },
+  // DELIVERY [7 items]
+  {
+    id: 22,
+    category: "DELIVERY",
+    catType: "delivery",
+    summary: "Send staging link to Kristen (after all tweaks)",
+    detail: "ONLY after all tweaks are done. Ping her when ready. URL: adelaide-2713ba.webflow.io"
+  },
+  {
+    id: 23,
+    category: "DELIVERY",
+    catType: "delivery",
+    summary: "Kristen sends staging link to J&A (Annie & Jack)",
+    detail: "Kristen sends the staging link + email to Annie & Jack. Possibly EOD today."
+  },
+  {
+    id: 24,
+    category: "DELIVERY",
+    catType: "delivery",
+    summary: "Update Google Sheet link + add RED BAR on old sheet",
+    detail: "Resource page should point to the new sheet. Add a RED BAR / \u201cno longer active\u201d notice on the old sheet so people don\u2019t use it."
+  },
+  {
+    id: 25,
+    category: "DELIVERY",
+    catType: "delivery",
+    summary: "Client can activate anytime \u2014 Ben flips live",
+    detail: "Ben can flip the site live instantly. If he\u2019s in surgery tomorrow, client pings Ben directly to activate."
+  },
+  {
+    id: 26,
+    category: "DELIVERY",
+    catType: "delivery",
+    summary: "Cocktails entered once \u2192 goes to both menus",
+    detail: "No duplicate entry needed \u2014 a cocktail entered once populates both menus. Confirm this with the client in the email."
+  },
+  {
+    id: 27,
+    category: "DELIVERY",
+    catType: "delivery",
+    summary: "Custom wine sub-heading confirmed working",
+    detail: "The sparkling/ros\u00e9 toggle is functional. Case insensitive, accent doesn\u2019t break it."
+  },
+  {
+    id: 28,
+    category: "DELIVERY",
+    catType: "delivery",
+    summary: "All print menus to deliver",
+    detail: "Deliver: food menu, secondary beverage (4 pages), lounge menu, dessert menu (existing/unchanged)."
+  }
+];
+
+// State: 0 = todo, 1 = in-progress, 2 = done
+let states = new Array(ITEMS.length).fill(0);
+let allExpanded = false;
+
+// --- URL hash state ---
+
+function statesFromHash() {
+  const hash = location.hash;
+  if (!hash || !hash.startsWith('#s=')) return null;
+  const vals = hash.slice(3).split(',').map(Number);
+  if (vals.length !== ITEMS.length) return null;
+  if (vals.some(v => v !== 0 && v !== 1 && v !== 2)) return null;
+  return vals;
+}
+
+function statesToHash() {
+  location.hash = '#s=' + states.join(',');
+}
+
+function loadState() {
+  const fromHash = statesFromHash();
+  if (fromHash) {
+    states = fromHash;
+  }
+}
+
+// --- UI rendering ---
+
+function getStatusHTML(state) {
+  if (state === 0) {
+    // Todo: empty circle
+    return '<div class="status-indicator todo"></div>';
+  } else if (state === 1) {
+    // In progress: filled amber circle
+    return '<div class="status-indicator wip"></div>';
+  } else {
+    // Done: green checkmark circle
+    return '<div class="status-indicator complete"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5L4.5 9L10 3" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+  }
+}
+
+function getStatusLabel(state) {
+  if (state === 1) return '<div class="item-status-label wip">in progress</div>';
+  if (state === 2) return '<div class="item-status-label complete">done</div>';
+  return '';
+}
+
+function getItemClass(state) {
+  if (state === 1) return ' in-progress';
+  if (state === 2) return ' done';
+  return '';
+}
+
+function updateProgress() {
+  let done = 0, wip = 0;
+  states.forEach(s => {
+    if (s === 2) done++;
+    else if (s === 1) wip++;
+  });
+  const total = ITEMS.length;
+
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('wipCount').textContent = wip;
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('progressDone').style.width = ((done / total) * 100) + '%';
+  document.getElementById('progressWip').style.width = ((wip / total) * 100) + '%';
+
+  // Update category counts
+  document.querySelectorAll('.category').forEach(cat => {
+    const indices = JSON.parse(cat.dataset.indices || '[]');
+    let catDone = 0, catWip = 0;
+    indices.forEach(i => {
+      if (states[i] === 2) catDone++;
+      else if (states[i] === 1) catWip++;
+    });
+    const catTotal = indices.length;
+    const countEl = cat.querySelector('.category-count');
+    if (countEl) {
+      const parts = [];
+      if (catDone > 0) parts.push(catDone + '\u2713');
+      if (catWip > 0) parts.push(catWip + '\u25cf');
+      countEl.textContent = parts.length > 0 ? parts.join(' ') + ' / ' + catTotal : '0/' + catTotal;
+    }
+  });
+}
+
+function cycleState(index) {
+  // 0 -> 1 -> 2 -> 0
+  states[index] = (states[index] + 1) % 3;
+  statesToHash();
+
+  const itemEl = document.querySelector('[data-item-index="' + index + '"]');
+  if (itemEl) {
+    itemEl.className = 'item' + getItemClass(states[index]);
+    if (itemEl.classList.contains('_expanded')) {
+      // preserve expanded
+    }
+    // Check if it was expanded
+    const wasExpanded = itemEl.querySelector('.item-detail') && itemEl.querySelector('.item-detail').style.display === 'block';
+
+    // Update the status indicator
+    const statusWrap = itemEl.querySelector('.status-wrap');
+    statusWrap.innerHTML = getStatusHTML(states[index]);
+
+    // Update status label
+    const labelEl = itemEl.querySelector('.item-status-label');
+    const newLabel = getStatusLabel(states[index]);
+    if (labelEl) {
+      if (newLabel) {
+        labelEl.outerHTML = newLabel;
+      } else {
+        labelEl.remove();
+      }
+    } else if (newLabel) {
+      const content = itemEl.querySelector('.item-content');
+      content.insertAdjacentHTML('beforeend', newLabel);
+    }
+
+    // Update class
+    itemEl.classList.remove('in-progress', 'done');
+    if (states[index] === 1) itemEl.classList.add('in-progress');
+    else if (states[index] === 2) itemEl.classList.add('done');
+
+    // Restore expanded state
+    if (wasExpanded) {
+      itemEl.classList.add('expanded');
+    }
+  }
+
+  updateProgress();
+}
+
+function toggleDetail(itemEl) {
+  itemEl.classList.toggle('expanded');
+}
+
+function buildUI() {
+  const container = document.getElementById('itemsContainer');
+  container.innerHTML = '';
+  let currentCategory = '';
+  let categoryDiv = null;
+  let categoryIndices = [];
+
+  ITEMS.forEach((item, index) => {
+    if (item.category !== currentCategory) {
+      // Finalize previous category
+      if (categoryDiv) {
+        categoryDiv.dataset.indices = JSON.stringify(categoryIndices);
+      }
+
+      currentCategory = item.category;
+      categoryIndices = [];
+      categoryDiv = document.createElement('div');
+      categoryDiv.className = 'category cat-' + item.catType;
+
+      const catCount = ITEMS.filter(i => i.category === currentCategory).length;
+
+      categoryDiv.innerHTML =
+        '<div class="category-header">' +
+          '<span class="category-dot"></span>' +
+          '<span class="category-title">' + currentCategory + '</span>' +
+          '<span class="category-count">0/' + catCount + '</span>' +
+        '</div>';
+      container.appendChild(categoryDiv);
+    }
+
+    categoryIndices.push(index);
+
+    const state = states[index];
+    const el = document.createElement('div');
+    el.className = 'item' + getItemClass(state);
+    el.setAttribute('data-item-index', index);
+
+    el.innerHTML =
+      '<div class="item-row">' +
+        '<div class="status-wrap" onclick="event.stopPropagation(); cycleState(' + index + ')">' +
+          getStatusHTML(state) +
+        '</div>' +
+        '<span class="item-num">' + item.id + '</span>' +
+        '<div class="item-content" onclick="toggleDetail(this.closest(\'.item\'))">' +
+          '<div class="item-summary">' + item.summary + '</div>' +
+          getStatusLabel(state) +
+        '</div>' +
+        '<div class="item-actions" onclick="event.stopPropagation()">' +
+          '<button class="action-btn edit-btn" onclick="editItem(' + index + ')" title="Edit">' +
+            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 1.5l2.5 2.5L4.5 12H2v-2.5L10 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</button>' +
+          '<button class="action-btn delete-btn" onclick="removeItem(' + index + ')" title="Remove">' +
+            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M5 4V2.5h4V4M3.5 4v8h7V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="expand-btn" onclick="toggleDetail(this.closest(\'.item\'))">' +
+          '<svg width="16" height="16" viewBox="0 0 16 16" fill="none">' +
+            '<path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg>' +
+        '</div>' +
+      '</div>' +
+      '<div class="item-detail">' + item.detail + '</div>';
+
+    categoryDiv.appendChild(el);
+  });
+
+  // Finalize last category
+  if (categoryDiv) {
+    categoryDiv.dataset.indices = JSON.stringify(categoryIndices);
+  }
+}
+
+function editItem(index) {
+  const item = ITEMS[index];
+  if (!item) return;
+  const newSummary = prompt('Edit summary:', item.summary);
+  if (newSummary === null) return;
+  item.summary = newSummary;
+  const newDetail = prompt('Edit detail:', item.detail);
+  if (newDetail !== null) item.detail = newDetail;
+  rebuildUI();
+}
+
+function removeItem(index) {
+  const item = ITEMS[index];
+  if (!item) return;
+  if (!confirm('Remove "' + item.summary + '"?')) return;
+  ITEMS.splice(index, 1);
+  states.splice(index, 1);
+  statesToHash();
+  rebuildUI();
+}
+
+function addItem() {
+  const categories = [];
+  const seen = {};
+  ITEMS.forEach(function(i) {
+    if (!seen[i.category]) {
+      seen[i.category] = true;
+      categories.push(i.category);
+    }
+  });
+  const catChoice = prompt('Category (or type new):\n' + categories.map(function(c, i) { return (i+1) + '. ' + c; }).join('\n'));
+  if (!catChoice) return;
+  var category, catType;
+  var num = parseInt(catChoice);
+  if (num > 0 && num <= categories.length) {
+    category = categories[num - 1];
+    catType = ITEMS.find(function(i) { return i.category === category; }).catType;
+  } else {
+    category = catChoice;
+    catType = prompt('Type (print/web/delivery):', 'web') || 'web';
+  }
+  var summary = prompt('Summary:');
+  if (!summary) return;
+  var detail = prompt('Detail (optional):', '') || '';
+  var maxId = Math.max.apply(null, ITEMS.map(function(i) { return i.id; }));
+  ITEMS.push({ id: maxId + 1, category: category, catType: catType, summary: summary, detail: detail });
+  states.push(0);
+  statesToHash();
+  rebuildUI();
+}
+
+function copyUnchecked() {
+  var lines = [];
+  ITEMS.forEach(function(item, index) {
+    if (states[index] !== 2) {
+      var prefix = states[index] === 1 ? '[WIP] ' : '';
+      lines.push(item.id + '. ' + prefix + '[' + item.category + '] ' + item.summary);
+    }
+  });
+
+  if (lines.length === 0) {
+    var btn = document.getElementById('copyBtn');
+    btn.textContent = 'All done!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy unchecked'; btn.classList.remove('copied'); }, 2000);
+    return;
+  }
+
+  var text = 'Adelaide Review Items \u2014 Remaining (' + lines.length + ')\n\n' + lines.join('\n');
+  copyToClipboard(text, function() {
+    var btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied ' + lines.length + ' items';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy unchecked'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function shareLink() {
+  var url = location.href;
+  copyToClipboard(url, function() {
+    showToast('Link copied to clipboard');
+    var btn = document.getElementById('shareBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Share link'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyToClipboard(text, onSuccess) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(function() {
+      fallbackCopy(text, onSuccess);
+    });
+  } else {
+    fallbackCopy(text, onSuccess);
+  }
+}
+
+function fallbackCopy(text, onSuccess) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    if (onSuccess) onSuccess();
+  } catch (e) {
+    // silent fail
+  }
+  document.body.removeChild(ta);
+}
+
+function showToast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('visible');
+  setTimeout(function() { el.classList.remove('visible'); }, 2200);
+}
+
+function toggleExpandAll() {
+  allExpanded = !allExpanded;
+  document.querySelectorAll('.item').forEach(function(el) {
+    if (allExpanded) {
+      el.classList.add('expanded');
+    } else {
+      el.classList.remove('expanded');
+    }
+  });
+  document.getElementById('expandAllBtn').textContent = allExpanded ? 'Collapse all' : 'Expand all';
+}
+
+function resetAll() {
+  if (!confirm('Reset all items to unchecked? This cannot be undone.')) return;
+  states = new Array(ITEMS.length).fill(0);
+  statesToHash();
+  rebuildUI();
+}
+
+function rebuildUI() {
+  buildUI();
+  updateProgress();
+}
+
+// Listen for hash changes (e.g., back/forward navigation)
+window.addEventListener('hashchange', function() {
+  var fromHash = statesFromHash();
+  if (fromHash) {
+    states = fromHash;
+    rebuildUI();
+  }
+});
+
+// Init
+loadState();
+buildUI();
+updateProgress();
+</script>
+</body>
+</html>

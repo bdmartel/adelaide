@@ -418,6 +418,41 @@
     .progress-stats { gap: 8px; }
     .progress-stat { font-size: 0.68rem; }
   }
+  /* ===== PRINT: Zebra Stripe ===== */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+    body { background: #fff !important; color: #111 !important; padding: 0; font-size: 11px; }
+    .header { position: static; background: #fff !important; border-bottom: 2px solid #111; padding: 12px 0; }
+    .header h1 { color: #111 !important; font-size: 14px; }
+    .progress-bar, .btn-group, .action-btn, .expand-btn, .item-actions { display: none !important; }
+    .category { background: none !important; border: none !important; margin-bottom: 8px; break-inside: avoid; }
+    .category-header { padding: 6px 8px; background: #111 !important; color: #fff !important; border-radius: 0; }
+    .category-title { color: #fff !important; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .category-dot { display: none; }
+    .category-count { color: #ccc !important; font-size: 9px; }
+    .item { border: none !important; border-radius: 0 !important; padding: 4px 8px; margin: 0; background: #fff !important; }
+    .item:nth-child(odd) { background: #fff !important; }
+    .item:nth-child(even) { background: #f0f0f0 !important; }
+    .item-row { gap: 6px; }
+    .status-indicator { width: 14px !important; height: 14px !important; border: 1.5px solid #333 !important; flex-shrink: 0; }
+    .status-indicator.done { background: #111 !important; border-color: #111 !important; }
+    .status-indicator.done svg path { stroke: #fff !important; }
+    .status-indicator.wip { background: #888 !important; border-color: #888 !important; animation: none !important; }
+    .item.checked { opacity: 1 !important; }
+    .item.checked .item-summary { text-decoration: line-through; color: #888 !important; }
+    .item.wip { border-left: none !important; }
+    .item.wip .item-summary { color: #111 !important; }
+    .item-num { color: #666 !important; font-size: 8px; }
+    .item-summary { color: #111 !important; font-size: 10px; }
+    .item-timestamp { font-size: 8px; color: #888 !important; }
+    .item-detail { display: none !important; }
+    .cat-print .item-num, .cat-web .item-num, .cat-delivery .item-num { color: #666 !important; }
+    .cat-print .category-header { background: #3d3520 !important; }
+    .cat-web .category-header { background: #1e2d4a !important; }
+    .cat-delivery .category-header { background: #1e3d28 !important; }
+    .container { max-width: 100%; padding: 0; }
+    @page { margin: 0.5in; size: letter; }
+  }
 </style>
 </head>
 <body>

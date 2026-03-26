@@ -383,6 +383,13 @@
   }
 
   .item.expanded .item-detail { display: block; }
+  .item-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .item-link { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--blue); background: var(--blue-bg); border: 1px solid var(--blue-border); border-radius: 4px; text-decoration: none; transition: all 0.15s; }
+  .item-link:hover { background: rgba(91, 138, 212, 0.18); color: #8ab4e8; }
+  .cat-print .item-link { color: var(--amber); background: var(--amber-bg); border-color: var(--amber-border); }
+  .cat-print .item-link:hover { background: rgba(212, 168, 67, 0.18); color: #e8c85b; }
+  .cat-delivery .item-link { color: var(--green); background: var(--green-bg); border-color: var(--green-border); }
+  .cat-delivery .item-link:hover { background: rgba(91, 189, 114, 0.18); color: #7de89b; }
 
   /* Toast notification */
   .toast {
@@ -499,42 +506,48 @@ const ITEMS = [
     category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
     catType: "print",
     summary: "Vertically center page 1 content",
-    detail: "Page 1 content is currently too high/top-heavy. Vertically center the content on the page so it doesn\u2019t crowd the top."
+    detail: "Page 1 content is currently too high/top-heavy. Vertically center the content on the page so it doesn\u2019t crowd the top.",
+    links: [{label:"Spirits Page",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits"}]
   },
   {
     id: 2,
     category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
     catType: "print",
     summary: "Fix flipped margins on middle sections",
-    detail: "The middle two sections have the same margin but should be unique \u2014 the right side needs to be inset differently. Check that each section\u2019s margins are set correctly per the layout."
+    detail: "The middle two sections have the same margin but should be unique \u2014 the right side needs to be inset differently. Check that each section\u2019s margins are set correctly per the layout.",
+    links: [{label:"Spirits Page",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits"}]
   },
   {
     id: 3,
     category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
     catType: "print",
     summary: "Increase spacing between brandy/rum/vodka sections",
-    detail: "Currently too tight \u2014 reads as one running list. Add div spacers between spirit sub-sections. Make spacing consistent between ALL spirit sub-sections across the page."
+    detail: "Currently too tight \u2014 reads as one running list. Add div spacers between spirit sub-sections. Make spacing consistent between ALL spirit sub-sections across the page.",
+    links: [{label:"Spirits Page",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits"}]
   },
   {
     id: 4,
     category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
     catType: "print",
     summary: "Fix price double-spacing (empty description padding)",
-    detail: "Items WITHOUT descriptions have extra space before the price. Worst on vodka where \u201c(18)\u201d floats to the right. Affects the spirits page AND the non-alcoholic page. Root cause: empty description field is still adding padding."
+    detail: "Items WITHOUT descriptions have extra space before the price. Worst on vodka where \u201c(18)\u201d floats to the right. Affects the spirits page AND the non-alcoholic page. Root cause: empty description field is still adding padding.",
+    links: [{label:"Spirits",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits"},{label:"NA Page",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na"}]
   },
   {
     id: 5,
     category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
     catType: "print",
     summary: "Verify all script font sizes match across pages",
-    detail: "Check script font sizes across all pages (white, red, ros\u00e9, whiskey, etc.). Whiskey page may be the outlier \u2014 compare it against the others."
+    detail: "Check script font sizes across all pages (white, red, ros\u00e9, whiskey, etc.). Whiskey page may be the outlier \u2014 compare it against the others.",
+    links: [{label:"Spirits",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits"},{label:"Wines P2",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl"},{label:"Wines P3",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl"}]
   },
   {
     id: 6,
     category: "PRINT \u2014 Secondary Beverage Menu (Spirits)",
     catType: "print",
     summary: "Fix page numbering consistency",
-    detail: "Page 1 shows a page number but pages 2, 3, and 4 do not. Make page numbering consistent across all pages."
+    detail: "Page 1 shows a page number but pages 2, 3, and 4 do not. Make page numbering consistent across all pages.",
+    links: [{label:"P1 Spirits",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits"},{label:"P2 Wines",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl"},{label:"P3 Wines",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl"},{label:"P4 NA",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na"}]
   },
   // PRINT -- Wines By The Bottle Page [2 items]
   {
@@ -542,14 +555,16 @@ const ITEMS = [
     category: "PRINT \u2014 Wines By The Bottle Page",
     catType: "print",
     summary: "Widen body copy margin on red section",
-    detail: "Text is breaking too narrow \u2014 \u201c2022\u201d is orphaned on its own line. Use the sparkling section as reference for the correct width. OK to deviate from InDesign if needed."
+    detail: "Text is breaking too narrow \u2014 \u201c2022\u201d is orphaned on its own line. Use the sparkling section as reference for the correct width. OK to deviate from InDesign if needed.",
+    links: [{label:"Wines P2 (red)",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl"}]
   },
   {
     id: 8,
     category: "PRINT \u2014 Wines By The Bottle Page",
     catType: "print",
     summary: "Fix grommet margin on red section",
-    detail: "Move text further RIGHT (away from grommets). Use annotated measurements: 1.75\u201d from left edge for red section, 1.5\u201d from left edge for white section."
+    detail: "Move text further RIGHT (away from grommets). Use annotated measurements: 1.75\u201d from left edge for red section, 1.5\u201d from left edge for white section.",
+    links: [{label:"Wines P2 (red)",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl"}]
   },
   // PRINT -- Non-Alcoholic Page [3 items]
   {
@@ -557,21 +572,24 @@ const ITEMS = [
     category: "PRINT \u2014 Non-Alcoholic Page",
     catType: "print",
     summary: "Fix double spacing on beers/soft drinks",
-    detail: "Same root cause as item #4 \u2014 empty description field adds padding. Also present on the spirits page. Fix the conditional spacing so items without descriptions don\u2019t get extra space."
+    detail: "Same root cause as item #4 \u2014 empty description field adds padding. Also present on the spirits page. Fix the conditional spacing so items without descriptions don\u2019t get extra space.",
+    links: [{label:"NA Page",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na"}]
   },
   {
     id: 10,
     category: "PRINT \u2014 Non-Alcoholic Page",
     catType: "print",
     summary: "Fix 3rd-line description spacing (line height)",
-    detail: "When a description wraps to 3 lines, the 3rd line is not equidistant from the 2nd. Also check Summer Squash entry: \u201ccornbread touching sheep\u2019s yogurt\u201d \u2014 verify the line height is consistent."
+    detail: "When a description wraps to 3 lines, the 3rd line is not equidistant from the 2nd. Also check Summer Squash entry: \u201ccornbread touching sheep\u2019s yogurt\u201d \u2014 verify the line height is consistent.",
+    links: [{label:"NA Page",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na"},{label:"Lounge",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/lounge"}]
   },
   {
     id: 11,
     category: "PRINT \u2014 Non-Alcoholic Page",
     catType: "print",
     summary: "Soft drinks description option confirmed",
-    detail: "Confirmed soft drinks should be able to have descriptions (e.g., \u201cCoke with lime\u201d). This is already set up \u2014 just verify it works correctly."
+    detail: "Confirmed soft drinks should be able to have descriptions (e.g., \u201cCoke with lime\u201d). This is already set up \u2014 just verify it works correctly.",
+    links: [{label:"NA Page",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na"}]
   },
   // PRINT -- Cocktail Lounge Menu [2 items]
   {
@@ -579,14 +597,16 @@ const ITEMS = [
     category: "PRINT \u2014 Cocktail Lounge Menu",
     catType: "print",
     summary: "Re-add sparkling collection list",
-    detail: "The sparkling collection list broke when the section name was changed to \u201csparkling / ros\u00e9\u201d. Re-add the collection list binding."
+    detail: "The sparkling collection list broke when the section name was changed to \u201csparkling / ros\u00e9\u201d. Re-add the collection list binding.",
+    links: [{label:"Lounge Menu",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/lounge"}]
   },
   {
     id: 13,
     category: "PRINT \u2014 Cocktail Lounge Menu",
     catType: "print",
     summary: "Check 3-line description wrapping",
-    detail: "Same wrapping issue as other menus. Verify that wines-by-the-glass descriptions don\u2019t overflow their containers when they run to 3 lines."
+    detail: "Same wrapping issue as other menus. Verify that wines-by-the-glass descriptions don\u2019t overflow their containers when they run to 3 lines.",
+    links: [{label:"Lounge Menu",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/lounge"}]
   },
   // PRINT -- Food Menu [1 item]
   {
@@ -594,7 +614,8 @@ const ITEMS = [
     category: "PRINT \u2014 Food Menu",
     catType: "print",
     summary: "Move raw food disclaimer to LEFT side",
-    detail: "The raw food disclaimer is currently on the wrong side. Move it to the LEFT side. Reference Kristen\u2019s design in the SecBev PDF for correct placement."
+    detail: "The raw food disclaimer is currently on the wrong side. Move it to the LEFT side. Reference Kristen\u2019s design in the SecBev PDF for correct placement.",
+    links: [{label:"Food Menu (print)",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/main"}]
   },
   // WEB -- Food Page [3 items]
   {
@@ -602,21 +623,24 @@ const ITEMS = [
     category: "WEB \u2014 Food Page",
     catType: "web",
     summary: "Add asterisk before \u201cSeasonal Desserts\u201d",
-    detail: "Should read \u201c*Seasonal Desserts available in-house\u201d \u2014 add the asterisk prefix to the text."
+    detail: "Should read \u201c*Seasonal Desserts available in-house\u201d \u2014 add the asterisk prefix to the text.",
+    links: [{label:"Food (web)",url:"https://adelaide-2713ba.webflow.io/food"}]
   },
   {
     id: 16,
     category: "WEB \u2014 Food Page",
     catType: "web",
     summary: "Fix footer pinching (desktop + mobile)",
-    detail: "Footer is positioned at zero to the bottom with no breathing room. Add proper spacing/padding below the content and above the footer on both desktop and mobile."
+    detail: "Footer is positioned at zero to the bottom with no breathing room. Add proper spacing/padding below the content and above the footer on both desktop and mobile.",
+    links: [{label:"Food (web)",url:"https://adelaide-2713ba.webflow.io/food"}]
   },
   {
     id: 17,
     category: "WEB \u2014 Food Page",
     catType: "web",
     summary: "Fix left-justification on mobile",
-    detail: "Section titles are misaligned on the mobile food page. Fix the left-justification so titles align properly."
+    detail: "Section titles are misaligned on the mobile food page. Fix the left-justification so titles align properly.",
+    links: [{label:"Food (web)",url:"https://adelaide-2713ba.webflow.io/food"}]
   },
   // WEB -- Beverage Page [4 items]
   {
@@ -624,28 +648,32 @@ const ITEMS = [
     category: "WEB \u2014 Beverage Page",
     catType: "web",
     summary: "Rewrite corkage fee notice (typos + formatting)",
-    detail: "Missing spaces after \u201clist,\u201d, missing space before \u201cfor\u201d, and other typos. Remove the hard line break between title and description. Kristen is sending corrected text. Fix on BOTH desktop AND mobile."
+    detail: "Missing spaces after \u201clist,\u201d, missing space before \u201cfor\u201d, and other typos. Remove the hard line break between title and description. Kristen is sending corrected text. Fix on BOTH desktop AND mobile.",
+    links: [{label:"Beverage (web)",url:"https://adelaide-2713ba.webflow.io/beverages"}]
   },
   {
     id: 19,
     category: "WEB \u2014 Beverage Page",
     catType: "web",
     summary: "Fix section title alignment on mobile",
-    detail: "Wine sub-headings (sparkling, red, white) and section titles are left-justified incorrectly on the mobile beverage page."
+    detail: "Wine sub-headings (sparkling, red, white) and section titles are left-justified incorrectly on the mobile beverage page.",
+    links: [{label:"Beverage (web)",url:"https://adelaide-2713ba.webflow.io/beverages"}]
   },
   {
     id: 20,
     category: "WEB \u2014 Beverage Page",
     catType: "web",
     summary: "Fix footer on mobile (same pinching issue)",
-    detail: "Same footer pinching issue as the food page \u2014 needs breathing room on mobile."
+    detail: "Same footer pinching issue as the food page \u2014 needs breathing room on mobile.",
+    links: [{label:"Beverage (web)",url:"https://adelaide-2713ba.webflow.io/beverages"}]
   },
   {
     id: 21,
     category: "WEB \u2014 Beverage Page",
     catType: "web",
     summary: "Ros\u00e9 with accent (\u00e9) everywhere",
-    detail: "Confirmed: use \u201cRos\u00e9\u201d with the accent. Make sure the script heading and any other references use the \u00e9 character."
+    detail: "Confirmed: use \u201cRos\u00e9\u201d with the accent. Make sure the script heading and any other references use the \u00e9 character.",
+    links: [{label:"Beverage (web)",url:"https://adelaide-2713ba.webflow.io/beverages"}]
   },
   // DELIVERY [7 items]
   {
@@ -653,7 +681,8 @@ const ITEMS = [
     category: "DELIVERY",
     catType: "delivery",
     summary: "Send staging link to Kristen (after all tweaks)",
-    detail: "ONLY after all tweaks are done. Ping her when ready. URL: adelaide-2713ba.webflow.io"
+    detail: "ONLY after all tweaks are done. Ping her when ready.",
+    links: [{label:"Staging Home",url:"https://adelaide-2713ba.webflow.io"},{label:"Resource Hub",url:"https://adelaide-2713ba.webflow.io/resources/home"}]
   },
   {
     id: 23,
@@ -667,7 +696,8 @@ const ITEMS = [
     category: "DELIVERY",
     catType: "delivery",
     summary: "Update Google Sheet link + add RED BAR on old sheet",
-    detail: "Resource page should point to the new sheet. Add a RED BAR / \u201cno longer active\u201d notice on the old sheet so people don\u2019t use it."
+    detail: "Resource page should point to the new sheet. Add a RED BAR / \u201cno longer active\u201d notice on the old sheet so people don\u2019t use it.",
+    links: [{label:"Resource Hub",url:"https://adelaide-2713ba.webflow.io/resources/home"}]
   },
   {
     id: 25,
@@ -695,7 +725,8 @@ const ITEMS = [
     category: "DELIVERY",
     catType: "delivery",
     summary: "All print menus to deliver",
-    detail: "Deliver: food menu, secondary beverage (4 pages), lounge menu, dessert menu (existing/unchanged)."
+    detail: "Deliver: food menu, secondary beverage (4 pages), lounge menu, dessert menu (existing/unchanged).",
+    links: [{label:"Food (print)",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/main"},{label:"Lounge",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/lounge"},{label:"Dessert",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/dessert"},{label:"SecBev P1",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits"},{label:"SecBev P2",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl"},{label:"SecBev P3",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl"},{label:"SecBev P4",url:"https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na"}]
   }
 ];
 
@@ -896,7 +927,9 @@ function buildUI() {
           '</svg>' +
         '</div>' +
       '</div>' +
-      '<div class="item-detail">' + item.detail + '</div>';
+      '<div class="item-detail">' + item.detail +
+        (item.links && item.links.length ? '<div class="item-links">' + item.links.map(function(l) { return '<a class="item-link" href="' + l.url + '" target="_blank" onclick="event.stopPropagation()">' + l.label + ' \u2197</a>'; }).join('') + '</div>' : '') +
+      '</div>';
 
     categoryDiv.appendChild(el);
   });

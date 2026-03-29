@@ -1,0 +1,21 @@
+Section	Name	Description	Price	Order
+COCKTAILS	Addy Spritz	Oka Gin, St-Germain, Lillet Rosé, Bitters, Topo Chico	(18)	1
+COCKTAILS	Stoned Ape	Power's Irish Whiskey, Crème de Banane, Absinthe Ordinaire	(24)	2
+COCKTAILS	Concord Cosmo	Wodka Vodka, Italicus, Concord Grape, Lime	(18)	3
+COCKTAILS	Shirley	Beefeater, Heering Cherry, St-Germain, Meyer Lemono	(20)	4
+COCKTAILS	Espresso Martini	Espresso, Vodka, Carpano Bianco, Cynar, Almond Foam	(18)	5
+COCKTAILS	Olive Oil Martini	Partanna OO washed Gin, Carpano Bianco, Olive Jam Olives	(20)	6
+COCKTAILS	Negroni	Oka Gin, Caffo Red Bitter, Crème de Noyaux	(18)	7
+COCKTAILS	Margarita	Del Maguey Vida, Cointreau, Lillet Blanc, Lime	(18)	8
+WINES > WHITE	Ashbrook Estate Chardonnay 2023	Margaret River, AU	(15/75)	1
+WINES > WHITE	Eastern Daylight Dry Riesling 2023	Finger Lakes, NY	(15/75)	2
+WINES > WHITE	Von Winning "SB II Trocken" Sauvignon Blanc 2024	Pfalz, DE		3
+WINES > WHITE	Domaine Les Enfants Sauvages Muscat 2023	Côtes Catalanes, FR	(17/85)	4
+WINES > SPARKLING	Contessa "1925" Prosecco	Veneto, IT · NV	(23/115)	1
+WINES > RED	Bonny Doon "Le Cigare Orange" 2023	Central Coast, CA	(17/85)	1
+WINES > RED	Manzone Giovanni "Le Ciliegie" Barbera 2023	Alba, Piedmont, IT	(15/75)	2
+WINES > RED	Tatomer Pinot Noir 2023	Santa Barbara County, CA	(19/95)	3
+WINES > RED	Ravines Cabernet Franc 2023	Finger Lakes, NY	(19/95)	4
+WINES > RED	Januik Cabernet Sauvignon 2022	Columbia Valley, WA	(23/115)	5
+BEER	Head High IPA	Kane	(13)	1
+BEER	The Crisp Pilsner	SixPoint	(10)	2

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adelaide QA — Sprint Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#111114;color:#e0e0e6;line-height:1.5;padding:0}
+  .top{position:sticky;top:0;z-index:10;background:#111114;border-bottom:1px solid #2a2a32;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .top h1{font-size:1rem;font-weight:800;white-space:nowrap}
+  .top .links{display:flex;gap:6px;flex-wrap:wrap}
+  .top a{font-size:0.6rem;font-weight:600;padding:3px 8px;border-radius:3px;text-decoration:none;color:#ccc;border:1px solid #333;transition:all .12s;white-space:nowrap}
+  .top a:hover{background:#333;color:#fff}
+  .top a.blue{background:#1e2d4a;border-color:#2e4d7a;color:#7ab}
+  .top a.green{background:#1e3d28;border-color:#2e6d48;color:#7b9}
+  .top a.amber{background:#2a2520;border-color:#4a3520;color:#da8}
+  .stream{max-width:800px;margin:0 auto;padding:16px 20px 60px}
+  .card{border:1px solid #2a2a32;border-radius:8px;margin-bottom:12px;overflow:hidden;transition:border-color .15s}
+  .card:target{border-color:#5b8ad4;box-shadow:0 0 0 1px #5b8ad4}
+  .card-head{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;cursor:pointer;user-select:none}
+  .card-head:hover{background:#1a1a1f}
+  .card-check{width:20px;height:20px;border:2px solid #444;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:1px;transition:all .15s}
+  .card-check.done{background:#4ade80;border-color:#4ade80}
+  .card-check.done svg{opacity:1}
+  .card-check svg{opacity:0;transition:opacity .15s}
+  .card-num{font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:600;color:#666;min-width:18px;margin-top:3px}
+  .card-body{flex:1;min-width:0}
+  .card-summary{font-size:0.85rem;font-weight:600;line-height:1.3}
+  .card-cat{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+  .cat-print{color:#d4a843}
+  .cat-web{color:#5b8ad4}
+  .cat-delivery{color:#5bbd72}
+  .card-detail{padding:0 14px 12px 44px;font-size:0.78rem;color:#999;line-height:1.5;display:none}
+  .card.open .card-detail{display:block}
+  .card.checked .card-summary{text-decoration:line-through;opacity:.45}
+  .card-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .card-links a{font-size:0.62rem;font-family:'JetBrains Mono',monospace;font-weight:600;padding:3px 7px;border-radius:3px;text-decoration:none;transition:all .12s}
+  .card-links a.stg{background:#1e2d4a;border:1px solid #2e4d7a;color:#7ab}
+  .card-links a.stg:hover{background:#2e4d7a}
+  .card-links a.des{background:#2a2520;border:1px solid #4a3520;color:#da8}
+  .card-links a.des:hover{background:#4a3520}
+  .divider{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:16px 0 6px;border-bottom:1px solid #2a2a32;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .divider .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .dot.print{background:#d4a843}
+  .dot.web{background:#5b8ad4}
+  .dot.delivery{background:#5bbd72}
+  .kbd{font-family:'JetBrains Mono',monospace;font-size:.55rem;background:#222;border:1px solid #333;border-radius:3px;padding:1px 4px;color:#888}
+  .ref-img{width:100%;max-width:750px;border:1px solid #2a2a32;border-radius:6px;margin:8px 0 4px;cursor:pointer;transition:all .15s}
+  .ref-img:hover{border-color:#555}
+  .ref-label{font-size:.6rem;color:#666;font-family:'JetBrains Mono',monospace;margin-bottom:8px;display:block}
+  .div-links{display:inline-flex;gap:4px;margin-left:auto}
+  .div-links a{font-size:.55rem;font-weight:700;padding:2px 6px;border-radius:3px;text-decoration:none;transition:all .12s}
+  .div-links a.dl-stg{background:#1e2d4a;color:#7ab;border:1px solid #2e4d7a}
+  .div-links a.dl-des{background:#2a2520;color:#da8;border:1px solid #4a3520}
+  .div-links a.dl-spec{background:#2a1e2e;color:#c08ada;border:1px solid #4a2e6a}
+  .div-links a:hover{filter:brightness(1.3)}
+  .card-links a.spec{background:#2a1e2e;border:1px solid #4a2e6a;color:#c08ada}
+  .card-links a.spec:hover{background:#4a2e6a}
+  .card-comment{margin:6px 0 0 44px;padding-right:14px}
+  .card-comment textarea{width:100%;background:#16161a;border:1px solid #2a2a32;border-radius:4px;color:#ccc;font-family:'Inter',sans-serif;font-size:.72rem;padding:6px 8px;resize:vertical;min-height:28px;max-height:120px;line-height:1.4;transition:border-color .15s}
+  .card-comment textarea:focus{outline:none;border-color:#5b8ad4}
+  .card-comment textarea::placeholder{color:#444}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Adelaide QA Sprint</h1>
+  <div class="links">
+    <a href="https://adelaide-2713ba.webflow.io/" target="_blank" class="blue">Home</a>
+    <a href="https://adelaide-2713ba.webflow.io/food" target="_blank" class="blue">Food</a>
+    <a href="https://adelaide-2713ba.webflow.io/beverages" target="_blank" class="blue">Beverage</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/home" target="_blank" class="green">Hub</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/main" target="_blank" class="green">Food Print</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/lounge" target="_blank" class="green">Lounge</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/dessert" target="_blank" class="green">Dessert</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits" target="_blank" class="green">SB1</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl" target="_blank" class="green">SB2</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl" target="_blank" class="green">SB3</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na" target="_blank" class="green">SB4</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=6956c9a24d9f7955becf88b2" target="_blank" class="amber">DES:Food</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c2d7e769ee049689d8817b" target="_blank" class="amber">DES:Bev</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c441c5405ff602713c7162" target="_blank" class="amber">DES:Lounge</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69740ca2ed6cca7c9533b685" target="_blank" class="amber">DES:FoodPrint</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c461e1531200ee0c0166fe" target="_blank" class="amber">DES:SB1</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c502d75005c56967443ef2" target="_blank" class="amber">DES:SB2</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c50c05f16c20b935fcae8c" target="_blank" class="amber">DES:SB3</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c50cbf8fc0392650354ecd" target="_blank" class="amber">DES:SB4</a>
+    <a href="https://docs.google.com/spreadsheets/d/1KQh4BZ5k9ldMAsI8TmDZOF_EzoP47OSt99EFnRRHcqY/edit" target="_blank">Sheet</a>
+  </div>
+</div>
+
+<div class="stream" id="stream"></div>
+
+<script>
+const DATA = [
+  {s:"PRINT — SecBev Spirits",t:"print",img:"qa-images/SecBEV_Page1_tweaks_01.png",stg:"/resources/printable-menus/secondary-beverage-page-1-spirits",des:"69c461e1531200ee0c0166fe",spec:"docs/ADELAIDE_SecBev_3Page_03.pdf",specLabel:"SecBev Design PDF",items:[
+    {id:1,sum:"Vertically center page 1 content",det:"Content is too high/top-heavy. Center vertically.",stg:"/resources/printable-menus/secondary-beverage-page-1-spirits",des:"69c461e1531200ee0c0166fe"},
+    {id:2,sum:"Fix flipped margins — left/right columns should differ",det:"Kristen: \"the middle two are the same when they're supposed to be unique... the right one is wrong, it needs to be flipped.\" The two spirit columns have the same margin but should differ. Check the annotated PDF for correct values.",stg:"/resources/printable-menus/secondary-beverage-page-1-spirits",des:"69c461e1531200ee0c0166fe"},
+    {id:3,sum:"Increase spacing between brandy/rum/vodka",det:"Too tight, reads as one running list. Add div spacers. Consistent across all sub-sections.",stg:"/resources/printable-menus/secondary-beverage-page-1-spirits",des:"69c461e1531200ee0c0166fe"},
+    {id:4,sum:"Fix price double-spacing on items without descriptions",det:"Kristen: \"The double space before price is still there.\" Vodka (18) floats right. Root cause: empty description field padding. Affects spirits + NA page.",stg:"/resources/printable-menus/secondary-beverage-page-1-spirits",des:"69c461e1531200ee0c0166fe"},
+    {id:5,sum:"Verify all script font sizes match across pages",det:"Whiskey page may be outlier. Compare white/red/rosé/whiskey sizes.",stg:"/resources/printable-menus/secondary-beverage-page-1-spirits",des:"69c461e1531200ee0c0166fe"},
+    {id:6,sum:"Fix page numbering — P1 shows number, P2-4 don't",det:"Make consistent across all 4 SecBev pages.",stg:"/resources/printable-menus/secondary-beverage-page-1-spirits",des:"69c461e1531200ee0c0166fe"},
+  ]},
+  {s:"PRINT — SecBev Wines BTL",t:"print",img:"qa-images/SecBEV_Page2_tweaks_01.png",img2:"qa-images/SecBEV_Page3_tweaks_01.png",stg:"/resources/printable-menus/secondary-beverage-page-2-wines-btl",des:"69c502d75005c56967443ef2",stg2:"/resources/printable-menus/secondary-beverage-page-3-wines-btl",des2:"69c50c05f16c20b935fcae8c",spec:"docs/ADELAIDE_SecBev_3Page_03.pdf",specLabel:"SecBev Design PDF",items:[
+    {id:7,sum:"P3: Widen body copy margin on red section",det:"\"2022\" orphaned on own line. Use sparkling as reference width. OK to deviate from InDesign.",stg:"/resources/printable-menus/secondary-beverage-page-3-wines-btl",des:"69c50c05f16c20b935fcae8c"},
+    {id:8,sum:"P3: Fix grommet margin — red=1.75\", white=1.5\"",det:"Red section too close to grommets. Move right. Use annotated measurement pages.",stg:"/resources/printable-menus/secondary-beverage-page-3-wines-btl",des:"69c50c05f16c20b935fcae8c"},
+    {id:32,sum:"P2: Script titles (white/rosé) may be too small + rosé missing accent",det:"Kristen: \"These titles look small to me.\" Also rosé needs the é accent.",stg:"/resources/printable-menus/secondary-beverage-page-2-wines-btl",des:"69c502d75005c56967443ef2"},
+    {id:34,sum:"P3: Red margin wrong (same as white, should differ) + sparkling spacing tight",det:"Kristen: \"White should be 1.5\" from left, Red should be 1.75\".\" Sparkling spacing inconsistent with white/rosé page.",stg:"/resources/printable-menus/secondary-beverage-page-3-wines-btl",des:"69c50c05f16c20b935fcae8c"},
+  ]},
+  {s:"PRINT — SecBev Non-Alcoholic",t:"print",img:"qa-images/SecBEV_Page4_tweaks_01.png",stg:"/resources/printable-menus/secondary-beverage-page-4-na",des:"69c50cbf8fc0392650354ecd",spec:"docs/ADELAIDE_SecBev_3Page_03.pdf",specLabel:"SecBev Design PDF",items:[
+    {id:9,sum:"Fix double spacing on beers/soft drinks",det:"Same root cause as #4 — empty description padding.",stg:"/resources/printable-menus/secondary-beverage-page-4-na",des:"69c50cbf8fc0392650354ecd"},
+    {id:10,sum:"Fix 3rd-line description spacing",det:"When a cocktail description wraps to 3 lines, the 3rd line spacing is off. Verify line height is consistent on the NA page.",stg:"/resources/printable-menus/secondary-beverage-page-4-na",des:"69c50cbf8fc0392650354ecd"},
+    {id:11,sum:"Soft drinks description option — verify it works",det:"Confirmed they should have descriptions. Just verify.",stg:"/resources/printable-menus/secondary-beverage-page-4-na",des:"69c50cbf8fc0392650354ecd"},
+    {id:35,sum:"P4: \"soft drinks\" spacing looks tighter than other sections",det:"Kristen: \"this space looks smaller / tighter than the rest.\" May be capital letters throwing off perception.",stg:"/resources/printable-menus/secondary-beverage-page-4-na",des:"69c50cbf8fc0392650354ecd"},
+  ]},
+  {s:"PRINT — Lounge Menu",t:"print",img:"qa-images/Lounge_tweaks_01.png",stg:"/resources/printable-menus/lounge",des:"69c441c5405ff602713c7162",spec:"docs/ADELAIDE_CocktailLounge_11x8.5_02.pdf",specLabel:"Lounge Design PDF",items:[
+    {id:12,sum:"Re-add sparkling collection list (broke on rename)",det:"Section name changed to \"sparkling / rosé\" — collection list binding broke.",stg:"/resources/printable-menus/lounge",des:"69c441c5405ff602713c7162"},
+    {id:13,sum:"Check 3-line description wrapping — Summer Squash",det:"Kristen flagged Summer Squash: \"cornbread looks like it's touching sheep's yogurt.\" 3rd line not equidistant. Also check wines-by-the-glass for long descriptions.",stg:"/resources/printable-menus/lounge",des:"69c441c5405ff602713c7162"},
+    {id:36,sum:"All spacing too tight — items running together",det:"Kristen: \"doesn't align with my original designs... all running together.\" Cocktails, wine sub-sections all need more room. Spacing between sub-sections should be equal.",stg:"/resources/printable-menus/lounge",des:"69c441c5405ff602713c7162"},
+    {id:37,sum:"DATA BUG: Last Light Bites = \"Balvenie 14 Year\" instead of \"Fennel Salad\"",det:"CMS data wrong. Last Light Bites item showing whiskey instead of salad. Fix in CMS or Sheet.",stg:"/resources/printable-menus/lounge",des:"69c441c5405ff602713c7162"},
+  ]},
+  {s:"PRINT — Food Menu",t:"print",img:"qa-images/MAINMENU_tweaks_01.png",stg:"/resources/printable-menus/main",des:"69740ca2ed6cca7c9533b685",spec:"docs/ADELAIDE_FoodMenu_8.5x11_02.pdf",specLabel:"Food Design PDF",items:[
+    {id:14,sum:"Move raw food disclaimer to LEFT side",det:"Currently on wrong side. Reference Kristen's design.",stg:"/resources/printable-menus/main",des:"69740ca2ed6cca7c9533b685"},
+    {id:33,sum:"\"WINES BY TTHE GLASS\" — typo, double T",det:"Fix the typo + wine sub-section spacing too tight (same as lounge).",stg:"/resources/printable-menus/main",des:"69740ca2ed6cca7c9533b685"},
+  ]},
+  {s:"WEB — Food Page",t:"web",stg:"/food",des:"6956c9a24d9f7955becf88b2",spec:"docs/Adelaide_WEB_MenuAdditions_R1_02.pdf",specLabel:"Web Mockup PDF",items:[
+    {id:15,sum:"Add asterisk before \"Seasonal Desserts\"",det:"Should read \"*Seasonal Desserts available in-house\"",stg:"/food",des:"6956c9a24d9f7955becf88b2"},
+    {id:16,sum:"Fix footer pinching (desktop + mobile)",det:"Footer at position zero with no breathing room.",stg:"/food",des:"6956c9a24d9f7955becf88b2"},
+    {id:17,sum:"Fix left-justification on mobile",det:"Section titles misaligned on mobile food page.",stg:"/food",des:"6956c9a24d9f7955becf88b2"},
+  ]},
+  {s:"WEB — Beverage Page",t:"web",img:"qa-images/BEVERAGES_tweaks_01.png",stg:"/beverages",des:"69c2d7e769ee049689d8817b",spec:"docs/Adelaide_WEB_MenuAdditions_R1_02.pdf",specLabel:"Web Mockup PDF",items:[
+    {id:18,sum:"Rewrite corkage fee notice (typos + line break)",det:"Missing spaces, remove hard line break between title and description. Desktop + mobile.",stg:"/beverages",des:"69c2d7e769ee049689d8817b"},
+    {id:19,sum:"Fix section title alignment on mobile",det:"Wine sub-headings (sparkling, red, white) left-justified incorrectly.",stg:"/beverages",des:"69c2d7e769ee049689d8817b"},
+    {id:20,sum:"Fix footer on mobile (same pinching issue)",det:"Same as food page footer.",stg:"/beverages",des:"69c2d7e769ee049689d8817b"},
+    {id:21,sum:"Rosé with accent (é) everywhere",det:"Script heading and all references must use é.",stg:"/beverages",des:"69c2d7e769ee049689d8817b"},
+    {id:29,sum:"Section spacers too big — should match food page",det:"Kristen (purple circles): vertical space between COCKTAILS → WINES → BEER is larger than food page.",stg:"/beverages",des:"69c2d7e769ee049689d8817b"},
+    {id:30,sum:"Wine sub-heading spacing inconsistent",det:"Kristen (red circles): gap between WINES title → white → sparkling → red → BEER should all be equal.",stg:"/beverages",des:"69c2d7e769ee049689d8817b"},
+  ]},
+  {s:"DELIVERY",t:"delivery",items:[
+    {id:22,sum:"Send staging link to Kristen after all tweaks",det:"adelaide-2713ba.webflow.io",stg:"/",des:null},
+    {id:24,sum:"Update Google Sheet link + RED BAR on old sheet",det:"Resource page → new sheet. Old sheet gets \"no longer active\" notice.",stg:"/resources/home",des:"697caa205daeb0560aa6319d"},
+    {id:26,sum:"Cocktails entered once → both menus",det:"Confirm with client: no duplicate entry needed.",stg:null,des:null},
+    {id:28,sum:"All print menus to deliver",det:"Food, SecBev (4 pages), Lounge, Dessert.",stg:"/resources/home",des:null},
+  ]},
+];
+
+const BASE="https://adelaide-2713ba.webflow.io";
+const DES="https://adelaide-2713ba.design.webflow.com?pageId=";
+let checked=JSON.parse(localStorage.getItem("qa-checked")||"{}");
+let comments=JSON.parse(localStorage.getItem("qa-comments")||"{}");
+
+// Double-persist: localStorage + URL hash for comments
+function loadFromHash(){
+  try{
+    const h=location.hash;
+    if(!h||!h.includes("d="))return;
+    const d=decodeURIComponent(h.split("d=")[1]);
+    const parsed=JSON.parse(d);
+    if(parsed.c)Object.assign(checked,parsed.c);
+    if(parsed.n)Object.assign(comments,parsed.n);
+  }catch(e){}
+}
+loadFromHash();
+
+function persistAll(){
+  localStorage.setItem("qa-checked",JSON.stringify(checked));
+  localStorage.setItem("qa-comments",JSON.stringify(comments));
+  // Also encode in hash for durability
+  const hasComments=Object.values(comments).some(v=>v&&v.trim());
+  const hasChecked=Object.values(checked).some(v=>v);
+  if(hasComments||hasChecked){
+    const payload={};
+    if(hasChecked)payload.c=checked;
+    if(hasComments){
+      const clean={};
+      Object.entries(comments).forEach(([k,v])=>{if(v&&v.trim())clean[k]=v});
+      payload.n=clean;
+    }
+    history.replaceState(null,null,"#d="+encodeURIComponent(JSON.stringify(payload)));
+  }
+}
+
+function save(){persistAll()}
+function saveComment(id,val){comments[id]=val;persistAll()}
+
+function toggle(id){
+  checked[id]=!checked[id];
+  save();
+  const card=document.getElementById("c"+id);
+  const box=card.querySelector(".card-check");
+  if(checked[id]){card.classList.add("checked");box.classList.add("done")}
+  else{card.classList.remove("checked");box.classList.remove("done")}
+}
+
+function render(){
+  const s=document.getElementById("stream");
+  let h="";
+  DATA.forEach(group=>{
+    let divLinks='<div class="div-links">';
+    if(group.stg)divLinks+=`<a class="dl-stg" href="${BASE}${group.stg}" target="_blank">View ↗</a>`;
+    if(group.des)divLinks+=`<a class="dl-des" href="${DES}${group.des}" target="_blank">Designer ↗</a>`;
+    if(group.stg2)divLinks+=`<a class="dl-stg" href="${BASE}${group.stg2}" target="_blank">P3 View ↗</a>`;
+    if(group.des2)divLinks+=`<a class="dl-des" href="${DES}${group.des2}" target="_blank">P3 Des ↗</a>`;
+    if(group.spec)divLinks+=`<a class="dl-spec" href="${group.spec}" target="_blank">${group.specLabel||"Design PDF"} ↗</a>`;
+    divLinks+='</div>';
+    h+=`<div class="divider"><span class="dot ${group.t}"></span>${group.s}${divLinks}</div>`;
+    if(group.img){h+=`<img class="ref-img" src="${group.img}" onclick="window.open(this.src)" title="Click to enlarge"><span class="ref-label">Kristen's annotated PDF — click to enlarge</span>`;}
+    if(group.img2){h+=`<img class="ref-img" src="${group.img2}" onclick="window.open(this.src)" title="Click to enlarge"><span class="ref-label">Page 2 — click to enlarge</span>`;}
+    group.items.forEach(item=>{
+      if(group.spec){item._spec=group.spec;item._specLabel=group.specLabel;}
+      const ck=checked[item.id];
+      h+=`<div class="card${ck?" checked":""}" id="c${item.id}" onclick="this.classList.toggle('open')">
+        <div class="card-head">
+          <div class="card-check${ck?" done":""}" onclick="event.stopPropagation();toggle(${item.id})"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.5L4.5 9L10 3" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span class="card-num">${item.id}</span>
+          <div class="card-body">
+            <div class="card-summary">${item.sum}</div>
+          </div>
+        </div>
+        <div class="card-detail" onclick="event.stopPropagation()">
+          ${item.det}
+          <div class="card-links">
+            ${item.stg?`<a class="stg" href="${BASE}${item.stg}" target="_blank">Staging ↗</a>`:""}
+            ${item.des?`<a class="des" href="${DES}${item.des}" target="_blank">Designer ↗</a>`:""}
+            ${item._spec?`<a class="spec" href="${item._spec}" target="_blank">${item._specLabel||"Design PDF"} ↗</a>`:""}
+          </div>
+          <div class="card-comment"><textarea placeholder="Add a note..." data-cid="${item.id}" oninput="saveComment(${item.id},this.value)">${comments[item.id]||""}</textarea></div>
+        </div>
+      </div>`;
+    });
+  });
+  s.innerHTML=h;
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Adelaide Project Tracker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #0f1117;
+    --bg-secondary: #1a1c25;
+    --bg-tertiary: #22252f;
+    --bg-hover: #2a2d3a;
+    --border: #2e3140;
+    --border-light: #383b4a;
+    --text-primary: #e8e9ed;
+    --text-secondary: #9ca0ad;
+    --text-muted: #6b7084;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201, 169, 110, 0.15);
+    --green: #4ade80;
+    --green-dim: rgba(74, 222, 128, 0.12);
+    --yellow: #facc15;
+    --yellow-dim: rgba(250, 204, 21, 0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96, 165, 250, 0.12);
+    --red: #f87171;
+    --red-dim: rgba(248, 113, 113, 0.12);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167, 139, 250, 0.12);
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,0.4);
+    --transition: 150ms ease;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 20px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .header h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .header .subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .header .tagline {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  /* ── Progress Bar ── */
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #d4b87a);
+    border-radius: 4px;
+    transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  .progress-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    white-space: nowrap;
+    font-weight: 500;
+    min-width: 48px;
+    text-align: right;
+  }
+
+  /* ── Main Content ── */
+  .main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 20px 40px;
+  }
+
+  /* ── Section Groups ── */
+  .section-group {
+    margin-bottom: 28px;
+  }
+
+  .section-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 0 2px;
+  }
+
+  .section-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .section-badge.web {
+    background: var(--blue-dim);
+    color: var(--blue);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+  }
+
+  .section-badge.print {
+    background: var(--purple-dim);
+    color: var(--purple);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .section-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  /* ── Deliverable Cards ── */
+  .card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .card:hover {
+    border-color: var(--border-light);
+  }
+
+  .card.completed {
+    opacity: 0.65;
+  }
+
+  .card.completed:hover {
+    opacity: 0.85;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card-header:active {
+    background: var(--bg-hover);
+  }
+
+  /* ── Checkbox ── */
+  .checkbox-wrap {
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  .checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    background: transparent;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .checkbox:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .checkbox.checked {
+    border-color: var(--green);
+    background: var(--green);
+  }
+
+  .checkbox.checked svg {
+    opacity: 1;
+  }
+
+  .checkbox svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .checkbox svg path {
+    stroke: var(--bg-primary);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  /* ── Card Content ── */
+  .card-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 2px;
+  }
+
+  .card-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .card.completed .card-title {
+    text-decoration: line-through;
+    text-decoration-color: var(--text-muted);
+  }
+
+  .card-slug {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .card-summary {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Status Badges ── */
+  .status-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .status-badge.in-progress {
+    background: var(--yellow-dim);
+    color: var(--yellow);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+  }
+
+  .status-badge.not-started {
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  .status-badge.partial {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid rgba(201, 169, 110, 0.25);
+  }
+
+  .status-badge.done {
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+  }
+
+  .owner-badge {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .timestamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--green);
+    margin-left: auto;
+  }
+
+  /* ── Expand Toggle ── */
+  .expand-toggle {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    align-self: flex-start;
+    margin-top: 1px;
+    transition: background var(--transition);
+  }
+
+  .expand-toggle:hover {
+    background: var(--bg-hover);
+  }
+
+  .expand-toggle svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    transition: transform 200ms ease, color var(--transition);
+  }
+
+  .card.expanded .expand-toggle svg {
+    transform: rotate(180deg);
+    color: var(--text-secondary);
+  }
+
+  /* ── Expandable Details ── */
+  .card-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card.expanded .card-details {
+    max-height: 2000px;
+  }
+
+  .card-details-inner {
+    padding: 0 16px 16px 50px;
+    border-top: 1px solid var(--border);
+    margin-top: 0;
+    padding-top: 14px;
+  }
+
+  .detail-section {
+    margin-bottom: 14px;
+  }
+
+  .detail-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .detail-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .detail-text {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .detail-text code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    background: var(--bg-tertiary);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+
+  .detail-text ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .detail-text ul li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 4px;
+  }
+
+  .detail-text ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--border-light);
+  }
+
+  .detail-text .done-item::before {
+    background: var(--green);
+  }
+
+  .detail-text .todo-item::before {
+    background: var(--yellow);
+  }
+
+  .detail-text .note-highlight {
+    background: var(--accent-dim);
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    border-left: 3px solid var(--accent);
+    margin-top: 6px;
+    font-size: 0.82rem;
+  }
+
+  .detail-text .strikethrough {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  .detail-text .arrow {
+    color: var(--accent);
+    margin: 0 4px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 24px 20px 32px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    max-width: 800px;
+    margin: 20px auto 0;
+  }
+
+  .footer .reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-top: 8px;
+    display: inline-block;
+  }
+
+  .footer .reset-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: var(--red-dim);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .header { padding: 16px 16px 14px; }
+    .header h1 { font-size: 1.15rem; }
+    .main { padding: 14px 14px 32px; }
+    .card-header { padding: 12px 14px; gap: 10px; }
+    .card-details-inner { padding-left: 46px; padding-right: 14px; }
+    .card-title { font-size: 0.9rem; }
+    .card-summary { font-size: 0.82rem; }
+    .header-top { flex-direction: column; gap: 2px; }
+    .expand-toggle { width: 24px; height: 24px; }
+  }
+
+  @media (max-width: 380px) {
+    .card-meta { gap: 6px; }
+    .card-details-inner { padding-left: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <h1>Adelaide</h1>
+      <span class="subtitle">Project Tracker</span>
+    </div>
+    <p class="tagline">Website & print menu deliverables</p>
+    <div class="progress-container">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-label" id="progressLabel">0 / 7</span>
+    </div>
+  </div>
+</header>
+
+<main class="main" id="app"></main>
+
+<footer class="footer">
+  <div>Adelaide Restaurant &middot; Project Tracker</div>
+  <button class="reset-btn" id="resetBtn">Reset All Progress</button>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // ────────────────────────────────────────────
+  // DATA
+  // ────────────────────────────────────────────
+
+  const DELIVERABLES = [
+    {
+      id: 'bev-page',
+      number: 1,
+      group: 'web',
+      title: 'Beverage Page',
+      slug: '/beverage',
+      status: 'in-progress',
+      owner: 'Ben + Claude',
+      summary: 'Clone food page structure with cocktails, wines, and beer sections.',
+      details: [
+        {
+          label: 'Spec',
+          html: 'Clone food page structure. Same background (<code>#e6e2de</code>), same typography hierarchy, same footer, same nav.'
+        },
+        {
+          label: 'Done So Far',
+          html: '<ul>' +
+            '<li class="done-item">Page created</li>' +
+            '<li class="done-item">Header SVG wired</li>' +
+            '<li class="done-item">Section underlines wired</li>' +
+            '<li class="done-item">Wine sub-headings styled (35px Saint Andrews Queen Adelaide)</li>' +
+            '<li class="done-item">Cocktails CMS Collection List created</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Still Needed',
+          html: '<ul>' +
+            '<li class="todo-item">Wire remaining Collection Lists (white wines, sparkling, red, beer)</li>' +
+            '<li class="todo-item">Fix Addy Spritz typos in Sheet: "Bi tters" and price "(8)" should be "(18)"</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Content Inventory',
+          html: '8 cocktails, 4 white wines, 1 sparkling, 5 red wines, 2 beers, corkage fee footnote'
+        },
+        {
+          label: 'Reference',
+          html: '<code>Adelaide_WEB_MenuAdditions_R1_02.pdf</code> pages 8\u20139'
+        },
+        {
+          label: 'Font Specs',
+          html: '<ul>' +
+            '<li>Script sub-headings (white, sparkling, red) = 35px / 50px line-height, Jellyka Saint-Andrew\u2019s Queen</li>' +
+            '<li>Section titles (COCKTAILS, WINES BY THE GLASS, BEER) = Montserrat uppercase with letter spacing</li>' +
+            '</ul>'
+        }
+      ]
+    },
+    {
+      id: 'nav-changes',
+      number: 2,
+      group: 'web',
+      title: 'Navigation Changes',
+      slug: null,
+      status: 'not-started',
+      owner: 'Ben + Claude',
+      summary: 'Dropdown menu on desktop, direct links on mobile.',
+      details: [
+        {
+          label: 'Desktop Behavior',
+          html: '<ul>' +
+            '<li>MENU stays in nav bar</li>' +
+            '<li>Hover: bolds</li>' +
+            '<li>Click: dropdown with FOOD + BEVERAGE sub-links</li>' +
+            '<li>Click again: hides dropdown</li>' +
+            '<li>Active state: on Food/Beverage page, sub-link + parent bold</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Mobile Behavior',
+          html: '<ul>' +
+            '<li>Replace single MENU button with FOOD and BEVERAGE direct-link buttons</li>' +
+            '<li>Order: RESERVATIONS, FOOD, BEVERAGE, HOURS/LOCATION, PRIVATE EVENTS, CONTACT</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Dependency',
+          html: '<div class="note-highlight">Depends on Beverage page existing</div>'
+        }
+      ]
+    },
+    {
+      id: 'food-footnote',
+      number: 3,
+      group: 'web',
+      title: 'Food Page Footnote Update',
+      slug: null,
+      status: 'not-started',
+      owner: 'Ben + Claude',
+      summary: 'Remove drinks mention from seasonal desserts line.',
+      details: [
+        {
+          label: 'Change',
+          html: '<span class="strikethrough">Drinks and seasonal desserts available in house</span>' +
+            '<span class="arrow">&rarr;</span>' +
+            '<strong>*Seasonal Desserts available in-house</strong>'
+        }
+      ]
+    },
+    {
+      id: 'url-redirect',
+      number: 4,
+      group: 'web',
+      title: 'URL Redirect',
+      slug: '/todays-menu \u2192 /food',
+      status: 'partial',
+      owner: 'Ben + Claude',
+      summary: '301 redirect so existing links don\u2019t break. Slug changed, redirect not yet set.',
+      details: [
+        {
+          label: 'Redirect Rules',
+          html: '<ul>' +
+            '<li>301 redirect: <code>/todays-menu</code> &rarr; <code>/food</code></li>' +
+            '<li>Also handle <code>/rev/todays-menu</code> if applicable</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Current State',
+          html: '<ul>' +
+            '<li class="done-item">Food page slug changed to <code>food</code></li>' +
+            '<li class="todo-item">301 redirect not yet configured</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Impact',
+          html: '<div class="note-highlight">Existing links (Google index, RESY, bookmarks) must not break</div>'
+        }
+      ]
+    },
+    {
+      id: 'cocktail-print',
+      number: 5,
+      group: 'print',
+      title: 'Cocktail Lounge Print Menu',
+      slug: null,
+      status: 'not-started',
+      owner: 'Ben',
+      summary: 'Landscape 11\u00d78.5 two-column layout: wines+beer left, cocktails+light bites right.',
+      details: [
+        {
+          label: 'Format',
+          html: 'Landscape (11\u00d78.5), same as existing dessert menu'
+        },
+        {
+          label: 'Layout',
+          html: 'Two columns \u2014 wines + beer on the left, cocktails + light bites on the right'
+        },
+        {
+          label: 'Light Bites Items',
+          html: '<ul>' +
+            '<li>Roasted Cauliflower (15)</li>' +
+            '<li>Crunchy Baby Eggplant (15)</li>' +
+            '<li>Summer Squash (17)</li>' +
+            '<li>Fennel Salad (16)</li>' +
+            '</ul>' +
+            '<div class="note-highlight">Identical to food menu Starters</div>'
+        },
+        {
+          label: 'Print Instructions',
+          html: 'Print from browser (Cmd+P), actual size, no margins'
+        },
+        {
+          label: 'Reference',
+          html: '<code>ADELAIDE_CocktailLounge_11x8.5_02.pdf</code>'
+        }
+      ]
+    },
+    {
+      id: 'food-print-disclaimer',
+      number: 6,
+      group: 'print',
+      title: 'Food Menu Print \u2014 Disclaimer Reposition',
+      slug: null,
+      status: 'not-started',
+      owner: 'Ben',
+      summary: 'Move raw/undercooked meats disclaimer from very bottom to bottom-left below food column.',
+      details: [
+        {
+          label: 'Change',
+          html: 'Move "Consuming raw or undercooked meats\u2026" disclaimer from very bottom to bottom-left below food column'
+        },
+        {
+          label: 'Spacing Requirement',
+          html: '<div class="note-highlight">Must have more spacing above the disclaimer than between regular items \u2014 should NOT feel like part of the last food item</div>'
+        },
+        {
+          label: 'Reference',
+          html: '<code>ADELAIDE_FoodMenu_8.5x11_02.pdf</code> page 2'
+        }
+      ]
+    },
+    {
+      id: 'sec-bev-print',
+      number: 7,
+      group: 'print',
+      title: 'Secondary Beverage Print Menu',
+      slug: null,
+      status: 'not-started',
+      owner: 'Ben',
+      summary: 'Two-sided portrait menu for leather binder. Non-alcoholic front, wines & spirits back.',
+      details: [
+        {
+          label: 'Format',
+          html: 'Portrait, two-sided, fits in leather binder (grommets on left)'
+        },
+        {
+          label: 'Front (Non-Alcoholic Side)',
+          html: '<ul>' +
+            '<li>NON-ALCOHOLIC header</li>' +
+            '<li>Cocktails (4), wines (3), beer (2), soft drinks (4)</li>' +
+            '<li>Layout: 1.5" from top, 1.25" from left, 1.5" from right</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Back (Wines + Spirits Side)',
+          html: '<ul>' +
+            '<li>WINES BY THE BOTTLE: white (3), sparkling (2), red (5)</li>' +
+            '<li>NEAT / ON THE ROCKS: two-column layout</li>' +
+            '<li>Spirits: whiskey (18), gin (3), tequila (7), mezcal (4), brandy (2), rum (3), vodka (1)</li>' +
+            '<li>Layout: 1.75" from left, 1.0" from right, 0.5" between sections, type centered top to bottom</li>' +
+            '</ul>'
+        },
+        {
+          label: 'Reference',
+          html: '<code>ADELAIDE_SecBev_3Page_03.pdf</code> pages 4\u20135'
+        }
+      ]
+    }
+  ];
+
+  // ────────────────────────────────────────────
+  // INDEXEDDB
+  // ────────────────────────────────────────────
+
+  const DB_NAME = 'AdelaideTracker';
+  const DB_VERSION = 1;
+  const STORE_NAME = 'deliverables';
+  let db = null;
+
+  function openDB() {
+    return new Promise(function(resolve, reject) {
+      var request = indexedDB.open(DB_NAME, DB_VERSION);
+      request.onupgradeneeded = function(e) {
+        var d = e.target.result;
+        if (!d.objectStoreNames.contains(STORE_NAME)) {
+          d.createObjectStore(STORE_NAME, { keyPath: 'id' });
+        }
+      };
+      request.onsuccess = function(e) {
+        db = e.target.result;
+        resolve(db);
+      };
+      request.onerror = function(e) {
+        reject(e.target.error);
+      };
+    });
+  }
+
+  function getState(id) {
+    return new Promise(function(resolve, reject) {
+      var tx = db.transaction(STORE_NAME, 'readonly');
+      var store = tx.objectStore(STORE_NAME);
+      var req = store.get(id);
+      req.onsuccess = function() { resolve(req.result || null); };
+      req.onerror = function() { reject(req.error); };
+    });
+  }
+
+  function setState(id, data) {
+    return new Promise(function(resolve, reject) {
+      var tx = db.transaction(STORE_NAME, 'readwrite');
+      var store = tx.objectStore(STORE_NAME);
+      var req = store.put(Object.assign({ id: id }, data));
+      req.onsuccess = function() { resolve(); };
+      req.onerror = function() { reject(req.error); };
+    });
+  }
+
+  function getAllStates() {
+    return new Promise(function(resolve, reject) {
+      var tx = db.transaction(STORE_NAME, 'readonly');
+      var store = tx.objectStore(STORE_NAME);
+      var req = store.getAll();
+      req.onsuccess = function() {
+        var map = {};
+        (req.result || []).forEach(function(item) { map[item.id] = item; });
+        resolve(map);
+      };
+      req.onerror = function() { reject(req.error); };
+    });
+  }
+
+  function clearAllStates() {
+    return new Promise(function(resolve, reject) {
+      var tx = db.transaction(STORE_NAME, 'readwrite');
+      var store = tx.objectStore(STORE_NAME);
+      var req = store.clear();
+      req.onsuccess = function() { resolve(); };
+      req.onerror = function() { reject(req.error); };
+    });
+  }
+
+  // ────────────────────────────────────────────
+  // RENDERING
+  // ────────────────────────────────────────────
+
+  var expandedCards = {};
+
+  function statusLabel(status) {
+    switch(status) {
+      case 'in-progress': return 'In Progress';
+      case 'not-started': return 'Not Started';
+      case 'partial': return 'Partially Done';
+      case 'done': return 'Done';
+      default: return status;
+    }
+  }
+
+  function formatTimestamp(ts) {
+    if (!ts) return '';
+    var d = new Date(ts);
+    var month = d.toLocaleString('en-US', { month: 'short' });
+    var day = d.getDate();
+    var hour = d.getHours();
+    var min = d.getMinutes();
+    var ampm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12 || 12;
+    min = min < 10 ? '0' + min : min;
+    return month + ' ' + day + ', ' + hour + ':' + min + ' ' + ampm;
+  }
+
+  function renderCard(item, state) {
+    var isComplete = state && state.completed;
+    var isExpanded = expandedCards[item.id];
+    var completedAt = state && state.completedAt;
+
+    var cardClass = 'card';
+    if (isComplete) cardClass += ' completed';
+    if (isExpanded) cardClass += ' expanded';
+
+    var slugHtml = item.slug ? ' <span class="card-slug">' + escapeHtml(item.slug) + '</span>' : '';
+
+    var statusClass = isComplete ? 'done' : item.status;
+    var statusText = isComplete ? 'Done' : statusLabel(item.status);
+
+    var timestampHtml = completedAt
+      ? '<span class="timestamp">' + formatTimestamp(completedAt) + '</span>'
+      : '';
+
+    var detailsHtml = '';
+    item.details.forEach(function(d) {
+      detailsHtml += '<div class="detail-section">' +
+        '<div class="detail-label">' + escapeHtml(d.label) + '</div>' +
+        '<div class="detail-text">' + d.html + '</div>' +
+        '</div>';
+    });
+
+    return '<div class="' + cardClass + '" data-id="' + item.id + '">' +
+      '<div class="card-header">' +
+        '<div class="checkbox-wrap">' +
+          '<div class="checkbox' + (isComplete ? ' checked' : '') + '" data-action="toggle" data-id="' + item.id + '">' +
+            '<svg viewBox="0 0 16 16"><path d="M3.5 8.5L6.5 11.5L12.5 4.5"/></svg>' +
+          '</div>' +
+        '</div>' +
+        '<div class="card-content" data-action="expand" data-id="' + item.id + '">' +
+          '<div class="card-title-row">' +
+            '<span class="card-number">#' + item.number + '</span>' +
+            '<span class="card-title">' + escapeHtml(item.title) + '</span>' +
+            slugHtml +
+          '</div>' +
+          '<div class="card-summary">' + escapeHtml(item.summary) + '</div>' +
+          '<div class="card-meta">' +
+            '<span class="status-badge ' + statusClass + '">' + statusText + '</span>' +
+            '<span class="owner-badge">' + escapeHtml(item.owner) + '</span>' +
+            timestampHtml +
+          '</div>' +
+        '</div>' +
+        '<div class="expand-toggle" data-action="expand" data-id="' + item.id + '">' +
+          '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M4 6L8 10L12 6"/>' +
+          '</svg>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-details">' +
+        '<div class="card-details-inner">' +
+          detailsHtml +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function render(states) {
+    var webItems = DELIVERABLES.filter(function(d) { return d.group === 'web'; });
+    var printItems = DELIVERABLES.filter(function(d) { return d.group === 'print'; });
+
+    var webComplete = webItems.filter(function(d) { return states[d.id] && states[d.id].completed; }).length;
+    var printComplete = printItems.filter(function(d) { return states[d.id] && states[d.id].completed; }).length;
+    var totalComplete = webComplete + printComplete;
+
+    // Update progress bar
+    var pct = Math.round((totalComplete / DELIVERABLES.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = totalComplete + ' / ' + DELIVERABLES.length;
+
+    // Render sections
+    var html = '';
+
+    // WEB section
+    html += '<div class="section-group">';
+    html += '<div class="section-header">';
+    html += '<span class="section-badge web">WEB</span>';
+    html += '<span class="section-title">Webflow Staging</span>';
+    html += '<span class="section-count">' + webComplete + '/' + webItems.length + '</span>';
+    html += '</div>';
+    webItems.forEach(function(item) {
+      html += renderCard(item, states[item.id]);
+    });
+    html += '</div>';
+
+    // PRINT section
+    html += '<div class="section-group">';
+    html += '<div class="section-header">';
+    html += '<span class="section-badge print">PRINT</span>';
+    html += '<span class="section-title">Webflow Print Pages</span>';
+    html += '<span class="section-count">' + printComplete + '/' + printItems.length + '</span>';
+    html += '</div>';
+    printItems.forEach(function(item) {
+      html += renderCard(item, states[item.id]);
+    });
+    html += '</div>';
+
+    document.getElementById('app').innerHTML = html;
+  }
+
+  // ────────────────────────────────────────────
+  // EVENT HANDLING
+  // ────────────────────────────────────────────
+
+  function findAction(el) {
+    while (el && el !== document.body) {
+      if (el.dataset && el.dataset.action) {
+        return { action: el.dataset.action, id: el.dataset.id, el: el };
+      }
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  document.getElementById('app').addEventListener('click', function(e) {
+    var hit = findAction(e.target);
+    if (!hit) return;
+
+    if (hit.action === 'toggle') {
+      e.stopPropagation();
+      toggleComplete(hit.id);
+    } else if (hit.action === 'expand') {
+      toggleExpand(hit.id);
+    }
+  });
+
+  function toggleComplete(id) {
+    getState(id).then(function(current) {
+      var wasComplete = current && current.completed;
+      var newState = {
+        completed: !wasComplete,
+        completedAt: !wasComplete ? Date.now() : null
+      };
+      return setState(id, newState);
+    }).then(function() {
+      return getAllStates();
+    }).then(function(states) {
+      render(states);
+    });
+  }
+
+  function toggleExpand(id) {
+    expandedCards[id] = !expandedCards[id];
+    getAllStates().then(function(states) {
+      render(states);
+    });
+  }
+
+  // Reset button
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    if (confirm('Reset all progress? This will uncheck all deliverables.')) {
+      clearAllStates().then(function() {
+        expandedCards = {};
+        return getAllStates();
+      }).then(function(states) {
+        render(states);
+      });
+    }
+  });
+
+  // ────────────────────────────────────────────
+  // INIT
+  // ────────────────────────────────────────────
+
+  openDB().then(function() {
+    return getAllStates();
+  }).then(function(states) {
+    render(states);
+  }).catch(function(err) {
+    console.error('Failed to initialize tracker:', err);
+    document.getElementById('app').innerHTML =
+      '<div style="padding:40px;text-align:center;color:var(--text-muted)">' +
+      'Failed to load tracker. Try refreshing the page.</div>';
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,3 +1,24 @@
+# OS
 .DS_Store
+__MACOSX/
+
+# Large media (call recordings, video)
 *.wav
 *.mp4
+
+# Design source files (use exported SVG/PNG/PDF instead)
+*.psd
+*.indd
+*.idml
+*.ai
+*.otf
+*.ttf
+
+# InDesign packages (full folder exports)
+docs/indesigns/
+docs/food-menu-r2/
+
+# Ephemeral working files
+call-frames/
+test-results/
+.ws-state

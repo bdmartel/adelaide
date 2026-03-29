@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Compare: Private Events</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #111; color: #ccc; font: 12px/1.6 system-ui, sans-serif; }
+
+.toolbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: #1e1e1e; padding: 8px 16px;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.5);
+}
+.toolbar h1 { font-size: 13px; color: #eee; white-space: nowrap; }
+.toolbar label { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+.toolbar input[type="range"] { width: 180px; accent-color: #9b632b; }
+.toolbar span { font-variant-numeric: tabular-nums; color: #999; font-size: 10px; min-width: 32px; }
+.toolbar .sep { width: 1px; height: 20px; background: #444; }
+.toolbar a { color: #9b632b; text-decoration: none; font-size: 11px; }
+.toolbar a:hover { text-decoration: underline; }
+.toolbar .nav { margin-left: auto; display: flex; gap: 10px; }
+
+.compare {
+  position: relative; margin-top: 42px; width: 1440px; margin-left: auto; margin-right: auto;
+}
+.compare img {
+  display: block; width: 1440px; position: absolute; top: 0; left: 0;
+}
+.compare .webflow { z-index: 1; }
+.compare .v2 { z-index: 2; }
+
+.hint {
+  position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+  background: #1e1e1ecc; padding: 4px 12px; border-radius: 4px;
+  font-size: 10px; color: #666; z-index: 100;
+}
+.hint kbd { background: #333; border: 1px solid #555; border-radius: 2px; padding: 0 3px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <h1>Private Events</h1>
+  <div class="sep"></div>
+  <label>
+    V2 Opacity
+    <input type="range" id="opacity" min="0" max="100" value="100" step="5">
+    <span id="opacity-val">100%</span>
+  </label>
+  <div class="sep"></div>
+  <label>
+    <input type="radio" name="mode" value="v2" checked> V2 on top
+  </label>
+  <label>
+    <input type="radio" name="mode" value="webflow"> Webflow on top
+  </label>
+  <div class="nav">
+    <a href="home.html">Home</a>
+    <a href="hours-location.html">Hours</a>
+    <a href="private-events.html"><b>Events</b></a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
+<div class="compare" id="compare">
+  <img class="webflow" src="../assets/reference/webflow-private-events.png" alt="Webflow">
+  <img class="v2" id="v2" src="../assets/reference/v2-private-events.png" alt="V2">
+</div>
+
+<div class="hint"><kbd>←</kbd><kbd>→</kbd> scrub opacity · <kbd>F</kbd> flip layers · <kbd>0</kbd>–<kbd>9</kbd> snap opacity</div>
+
+<script>
+const v2 = document.getElementById('v2');
+const slider = document.getElementById('opacity');
+const valEl = document.getElementById('opacity-val');
+const radios = document.querySelectorAll('input[name="mode"]');
+const container = document.getElementById('compare');
+
+function update() {
+  v2.style.opacity = slider.value / 100;
+  valEl.textContent = slider.value + '%';
+}
+
+// Set container height once images load
+function setHeight() {
+  const wf = container.querySelector('.webflow');
+  const v2img = container.querySelector('.v2');
+  const h = Math.max(wf.naturalHeight || 900, v2img.naturalHeight || 900);
+  container.style.height = h + 'px';
+}
+container.querySelector('.webflow').addEventListener('load', setHeight);
+container.querySelector('.v2').addEventListener('load', setHeight);
+
+slider.addEventListener('input', update);
+
+// Flip layers
+radios.forEach(r => r.addEventListener('change', () => {
+  const v2Top = r.value === 'v2' && r.checked;
+  container.querySelector('.v2').style.zIndex = v2Top ? 2 : 0;
+  container.querySelector('.webflow').style.zIndex = v2Top ? 1 : 2;
+  // When webflow on top, the opacity controls webflow instead
+  if (!v2Top) {
+    v2.style.opacity = 1;
+    container.querySelector('.webflow').style.opacity = slider.value / 100;
+  } else {
+    container.querySelector('.webflow').style.opacity = 1;
+    update();
+  }
+}));
+
+function getTopImg() {
+  const wfOnTop = container.querySelector('.webflow').style.zIndex === '2';
+  return wfOnTop ? container.querySelector('.webflow') : v2;
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  const top = getTopImg();
+  if (e.key === 'ArrowRight') {
+    slider.value = Math.min(100, +slider.value + 5);
+    top.style.opacity = slider.value / 100;
+    valEl.textContent = slider.value + '%';
+  } else if (e.key === 'ArrowLeft') {
+    slider.value = Math.max(0, +slider.value - 5);
+    top.style.opacity = slider.value / 100;
+    valEl.textContent = slider.value + '%';
+  } else if (e.key === 'f' || e.key === 'F') {
+    const wfOnTop = container.querySelector('.webflow').style.zIndex === '2';
+    const target = wfOnTop ? 'v2' : 'webflow';
+    document.querySelector('input[name="mode"][value="' + target + '"]').click();
+  } else if (e.key >= '0' && e.key <= '9') {
+    const val = e.key === '0' ? 0 : e.key * 10 + 10 > 100 ? 100 : e.key * 10;
+    slider.value = val;
+    top.style.opacity = val / 100;
+    valEl.textContent = val + '%';
+  }
+});
+
+update();
+</script>
+</body>
+</html>

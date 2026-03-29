@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adelaide - Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Jellyka';
+            src: url('fonts/Saint-Andrews Queen.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @page {
+            size: letter portrait;
+            margin: 0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #461f0d;
+            background: #9a9a9a;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 53px 0;
+        }
+
+        .menu-page {
+            position: relative;
+            width: 816px;
+            min-height: 1056px;
+            margin: 0 auto;
+            padding: 0 72px 0 96px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #fff;
+            box-shadow: 0 3px 27px rgba(0,0,0,0.3);
+        }
+
+        .menu-page > h2 {
+            font-weight: 300;
+            font-size: 10.67px;
+            line-height: 18.27px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: left;
+            margin-bottom: 40.4px;
+        }
+
+        .zone {
+            display: grid;
+        }
+
+        .category h3 {
+            font-family: 'Jellyka', cursive;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 22.67px;
+            line-height: 27.07px;
+            letter-spacing: 0.05em;
+            margin-bottom: 0;
+        }
+
+        .category ul {
+            list-style: none;
+        }
+
+        .category li {
+            font-size: 10.67px;
+            line-height: 18.27px;
+            letter-spacing: 0.05em;
+        }
+
+        .name {
+            font-weight: 600;
+        }
+
+        .price {
+            font-weight: 300;
+            white-space: nowrap;
+        }
+
+        .category + .category {
+            margin-top: 19.33px;
+        }
+
+        /* ── Overlay Tool ──────────────────────────── */
+
+        #pdf-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            display: none;
+            transform-origin: top left;
+        }
+
+        #overlay-panel {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            background: #1e1e1e;
+            color: #bbb;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font: 11px/1.8 system-ui, -apple-system, sans-serif;
+            z-index: 1000;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            min-width: 200px;
+            user-select: none;
+        }
+
+        #overlay-panel summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #eee;
+            font-size: 12px;
+            outline: none;
+        }
+
+        #overlay-options {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 8px;
+        }
+
+        #overlay-options label {
+            display: grid;
+            grid-template-columns: 52px 1fr 36px;
+            align-items: center;
+            gap: 6px;
+        }
+
+        #overlay-options input[type="range"] {
+            width: 100%;
+            accent-color: #888;
+        }
+
+        #overlay-options span {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            color: #999;
+            font-size: 10px;
+        }
+
+        .overlay-hint {
+            color: #666;
+            font-size: 9px;
+            margin-top: 6px;
+            border-top: 1px solid #333;
+            padding-top: 5px;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body {
+                background: none;
+                padding: 0;
+                display: block;
+            }
+            .menu-page {
+                width: 100%;
+                min-height: 100vh;
+                box-shadow: none;
+                margin: 0;
+                padding: 0 72px 0 96px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <details id="overlay-panel" class="no-print">
+        <summary>PDF Overlay</summary>
+        <div id="overlay-options">
+            <label>
+                On
+                <input type="checkbox" id="overlay-on" style="width:auto">
+                <span></span>
+            </label>
+            <label>
+                Opacity
+                <input type="range" id="overlay-opacity" min="5" max="100" value="40" step="5">
+                <span id="opacity-val">40%</span>
+            </label>
+            <label>
+                Scale
+                <input type="range" id="overlay-scale" min="97" max="103" value="100" step="0.1">
+                <span id="scale-val">100%</span>
+            </label>
+            <label>
+                X
+                <input type="range" id="overlay-x" min="-200" max="200" value="0" step="0.5">
+                <span id="x-val">0px</span>
+            </label>
+            <label>
+                Y
+                <input type="range" id="overlay-y" min="-200" max="200" value="0" step="0.5">
+                <span id="y-val">0px</span>
+            </label>
+        </div>
+        <div class="overlay-hint">Toggle On to show PDF overlay</div>
+    </details>
+
+    <main>
+        <article class="menu-page" data-pdf="ADELAIDE_SecBev_3Page_03.pdf" data-page="1">
+            <canvas id="pdf-overlay" class="no-print"></canvas>
+            <h2>NEAT / ON THE ROCKS</h2>
+                <div class="zone" style="grid-template-columns: 250.7px 240px; column-gap: 15px; margin-bottom: 16.7px">
+                    <div class="col">
+                        <div class="category">
+                            <h3>whiskey / american</h3>
+                            <ul>
+                            <li><span class="name">Natterjack Irish Whiskey</span> <span class="price">(16)</span></li>
+                            <li><span class="name">Redbreast 12 Year</span> <span class="price">(22)</span></li>
+                            <li><span class="name">Green Spot Irish Whiskey</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Glen Grant 12 Year</span> <span class="price">(21)</span></li>
+                            <li><span class="name">Balvenie 14 Year Caribbean Cask</span> <span class="price">(25)</span></li>
+                            <li><span class="name">Aberlour A'Bunadh Alba</span> <span class="price">(32)</span></li>
+                            <li><span class="name">Talisker Storm</span> <span class="price">(19)</span></li>
+                            <li><span class="name">Ardbeg Corryvreckan</span> <span class="price">(22)</span></li>
+                            <li><span class="name">Clynelish 14 Year</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Nikka Taketsuru Pure Malt</span> <span class="price">(19)</span></li>
+                            <li><span class="name">Ichiro's Malt US Edition</span> <span class="price">(29)</span></li>
+                            <li><span class="name">Michters Bourbon</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Woodford Reserve</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Milam and Green Single Barrel</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Kings County Bourbon</span> <span class="price">(21)</span></li>
+                            <li><span class="name">Russell's Reserve 10 Year</span> <span class="price">(19)</span></li>
+                            <li><span class="name">High West Rendezvous Rye</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Milam and Green Port Finished Rye</span> <span class="price">(20)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="category">
+                            <h3>whiskey / international</h3>
+                            <ul>
+                            <li><span class="name">Whistlepig 10 Year</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Green Spot Irish Whiskey</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Glen Grant 12 Year</span> <span class="price">(21)</span></li>
+                            <li><span class="name">Balvenie 14 Year Caribbean Cask</span> <span class="price">(25)</span></li>
+                            <li><span class="name">Aberlour A'Bunadh Alba</span> <span class="price">(32)</span></li>
+                            <li><span class="name">Talisker Storm</span> <span class="price">(19)</span></li>
+                            <li><span class="name">Ardbeg Corryvreckan</span> <span class="price">(22)</span></li>
+                            <li><span class="name">Clynelish 14 Year</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Nikka Taketsuru Pure Malt</span> <span class="price">(19)</span></li>
+                            <li><span class="name">Ichiro's Malt US Edition</span> <span class="price">(29)</span></li>
+                            <li><span class="name">Michters Bourbon</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Woodford Reserve</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Milam and Green Single Barrel</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Kings County Bourbon</span> <span class="price">(21)</span></li>
+                            <li><span class="name">Russell's Reserve 10 Year</span> <span class="price">(19)</span></li>
+                            <li><span class="name">High West Rendezvous Rye</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Milam and Green Port Finished Rye</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Whistlepig 10 Year</span> <span class="price">(24)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="zone" style="grid-template-columns: 1.1fr 1fr 1fr; column-gap: 10px; margin-bottom: 0">
+                    <div class="col">
+                        <div class="category">
+                            <h3>tequila</h3>
+                            <ul>
+                            <li><span class="name">Tequila Ocho Plata</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Cascahuin Tahona</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Curamia Blanco</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Mijenta Reposado</span> <span class="price">(22)</span></li>
+                            <li><span class="name">123 Organic Anejo</span> <span class="price">(26)</span></li>
+                            <li><span class="name">Arette Gran Clase Extra Anejo</span> <span class="price">(32)</span></li>
+                            <li><span class="name">Tequila Ocho Plata</span> <span class="price">(20)</span></li>
+                            <li><span class="name">Cascahuin Tahona</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Curamia Blanco</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Mijenta Reposado</span> <span class="price">(22)</span></li>
+                            <li><span class="name">123 Organic Anejo</span> <span class="price">(26)</span></li>
+                            <li><span class="name">Arette Gran Clase Extra Anejo</span> <span class="price">(32)</span></li>
+                            </ul>
+                        </div>
+                        <div class="category">
+                            <h3>brandy</h3>
+                            <ul>
+                            <li><span class="name">Cognac Park VS "Carte Blanche"</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Philbert VSOP</span> <span class="price">(16)</span></li>
+                            <li><span class="name">Cognac Park VS "Carte Blanche"</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Philbert VSOP</span> <span class="price">(16)</span></li>
+                            <li><span class="name">Cognac Park VS "Carte Blanche"</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Philbert VSOP</span> <span class="price">(16)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="category">
+                            <h3>mezcal</h3>
+                            <ul>
+                            <li><span class="name">Del Maguey Chichicapa</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Los Nahuales Tobala</span> <span class="price">(21)</span></li>
+                            <li><span class="name">Bozal Pechuga</span> <span class="price">(22)</span></li>
+                            <li><span class="name">Real Minero Barril</span> <span class="price">(34)</span></li>
+                            <li><span class="name">Del Maguey Chichicapa</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Los Nahuales Tobala</span> <span class="price">(21)</span></li>
+                            <li><span class="name">Bozal Pechuga</span> <span class="price">(22)</span></li>
+                            <li><span class="name">Real Minero Barril</span> <span class="price">(34)</span></li>
+                            <li><span class="name">Del Maguey Chichicapa</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Los Nahuales Tobala</span> <span class="price">(21)</span></li>
+                            </ul>
+                        </div>
+                        <div class="category">
+                            <h3>rum</h3>
+                            <ul>
+                            <li><span class="name">Foursquare Probitas</span> <span class="price">(16)</span></li>
+                            <li><span class="name">El Dorado 12 Year</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Hampden Estate 8 Year</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Foursquare Probitas</span> <span class="price">(16)</span></li>
+                            <li><span class="name">El Dorado 12 Year</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Hampden Estate 8 Year</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Foursquare Probitas</span> <span class="price">(16)</span></li>
+                            <li><span class="name">El Dorado 12 Year</span> <span class="price">(18)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="category">
+                            <h3>gin</h3>
+                            <ul>
+                            <li><span class="name">Sipsmith</span> <span class="price">(16)</span></li>
+                            <li><span class="name">Monkey 47</span> <span class="price">(24)</span></li>
+                            <li><span class="name">The Botanist</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Sipsmith</span> <span class="price">(16)</span></li>
+                            <li><span class="name">Monkey 47</span> <span class="price">(24)</span></li>
+                            <li><span class="name">The Botanist</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Sipsmith</span> <span class="price">(16)</span></li>
+                            <li><span class="name">Monkey 47</span> <span class="price">(24)</span></li>
+                            <li><span class="name">The Botanist</span> <span class="price">(18)</span></li>
+                            </ul>
+                        </div>
+                        <div class="category">
+                            <h3>vodka</h3>
+                            <ul>
+                            <li><span class="name">Ketel One</span> <span class="price">(16)</span></li>
+                            <li><span class="name">Lorem Ipsum Soet</span> <span class="price">(18)</span></li>
+                            <li><span class="name">Excepteu Sint</span> <span class="price">(24)</span></li>
+                            <li><span class="name">Duis aute Rure</span> <span class="price">(18)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </article>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+    (function() {
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const canvas = document.getElementById('pdf-overlay');
+        const ctx = canvas.getContext('2d');
+        const page = document.querySelector('.menu-page');
+        const pdfFile = page.dataset.pdf;
+        const pageNum = parseInt(page.dataset.page) || 1;
+
+        let pdfPage = null;
+        let loaded = false;
+        const DPR = window.devicePixelRatio || 1;
+        // PDF internals are in points (72dpi). CSS px = 1/96 inch.
+        // Scale factor to convert PDF points → CSS pixels.
+        const PT_TO_PX = 96 / 72;
+
+        async function loadPDF() {
+            if (loaded) return;
+            loaded = true;
+            try {
+                const doc = await pdfjsLib.getDocument(pdfFile).promise;
+                pdfPage = await doc.getPage(pageNum);
+                render();
+            } catch (e) {
+                const hint = document.querySelector('.overlay-hint');
+                hint.textContent = 'Load failed — run: python3 -m http.server';
+                hint.style.color = '#e88';
+            }
+        }
+
+        async function render() {
+            if (!pdfPage) return;
+            const scale = parseFloat(el('overlay-scale').value) / 100;
+            const vp = pdfPage.getViewport({ scale: PT_TO_PX * scale });
+
+            canvas.width = vp.width * DPR;
+            canvas.height = vp.height * DPR;
+            canvas.style.width = vp.width + 'px';
+            canvas.style.height = vp.height + 'px';
+
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            await pdfPage.render({ canvasContext: ctx, viewport: vp }).promise;
+        }
+
+        function el(id) { return document.getElementById(id); }
+
+        function update() {
+            const on = el('overlay-on').checked;
+            const opacity = el('overlay-opacity').value;
+            const x = el('overlay-x').value;
+            const y = el('overlay-y').value;
+
+            canvas.style.display = on ? 'block' : 'none';
+            canvas.style.opacity = opacity / 100;
+            canvas.style.left = x + 'px';
+            canvas.style.top = y + 'px';
+
+            el('opacity-val').textContent = opacity + '%';
+            el('scale-val').textContent = el('overlay-scale').value + '%';
+            el('x-val').textContent = x + 'px';
+            el('y-val').textContent = y + 'px';
+        }
+
+        // Load on first interaction
+        el('overlay-panel').addEventListener('toggle', function() {
+            if (this.open) loadPDF();
+        });
+
+        el('overlay-on').addEventListener('change', function() {
+            if (this.checked && !pdfPage) loadPDF();
+            update();
+        });
+        el('overlay-opacity').addEventListener('input', update);
+        el('overlay-x').addEventListener('input', update);
+        el('overlay-y').addEventListener('input', update);
+        el('overlay-scale').addEventListener('input', function() {
+            render().then(update);
+        });
+
+        // Double-click scale/offset to reset
+        el('overlay-scale').addEventListener('dblclick', function() { this.value = 100; render().then(update); });
+        el('overlay-x').addEventListener('dblclick', function() { this.value = 0; update(); });
+        el('overlay-y').addEventListener('dblclick', function() { this.value = 0; update(); });
+
+        // Drag overlay to reposition
+        let dragging = false, dragStartX, dragStartY, offsetX, offsetY;
+
+        canvas.style.pointerEvents = 'none'; // default off
+
+        // Use a transparent drag layer over the canvas
+        const dragLayer = document.createElement('div');
+        dragLayer.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;display:none;cursor:grab;';
+        page.appendChild(dragLayer);
+
+        // Show drag layer when overlay is on
+        const origUpdate = update;
+        update = function() {
+            origUpdate();
+            dragLayer.style.display = el('overlay-on').checked ? 'block' : 'none';
+        };
+
+        dragLayer.addEventListener('mousedown', function(e) {
+            dragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            offsetX = parseFloat(el('overlay-x').value) || 0;
+            offsetY = parseFloat(el('overlay-y').value) || 0;
+            dragLayer.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', function(e) {
+            if (!dragging) return;
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+            const newX = Math.round((offsetX + dx) * 2) / 2; // snap to 0.5px
+            const newY = Math.round((offsetY + dy) * 2) / 2;
+            el('overlay-x').value = newX;
+            el('overlay-y').value = newY;
+            update();
+        });
+
+        window.addEventListener('mouseup', function() {
+            if (dragging) {
+                dragging = false;
+                dragLayer.style.cursor = 'grab';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

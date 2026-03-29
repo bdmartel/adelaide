@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adelaide — Working Links</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #111114; color: #e0e0e6; padding: 20px; line-height: 1.5; }
+  h1 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+  .sub { font-size: 0.75rem; color: #888; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  .section { border: 1px solid #2a2a32; border-radius: 8px; overflow: hidden; }
+  .section-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+  .section-title:hover { filter: brightness(1.2); }
+  .section-title .chevron { transition: transform 0.2s; font-size: 0.8rem; }
+  .section.collapsed .chevron { transform: rotate(-90deg); }
+  .section.collapsed .links { display: none; }
+  .section-title.staging { background: #1e2d4a; color: #5b8ad4; }
+  .section-title.designer { background: #2a2520; color: #d4a843; }
+  .section-title.print { background: #1e3d28; color: #5bbd72; }
+  .section-title.tools { background: #2a2a32; color: #aaa; }
+  .links { display: flex; flex-direction: column; }
+  a { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: #1a1a1f; border-bottom: 1px solid #222228; color: #e0e0e6; text-decoration: none; font-size: 0.78rem; transition: all 0.12s; }
+  a:last-child { border-bottom: none; }
+  a:hover { background: #222228; }
+  .label { font-weight: 600; white-space: nowrap; }
+  .url { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: #555; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .badge { font-size: 0.55rem; font-weight: 700; padding: 2px 5px; border-radius: 3px; flex-shrink: 0; }
+  .badge.web { background: #1e2d4a; color: #5b8ad4; }
+  .badge.print { background: #1e3d28; color: #5bbd72; }
+  .badge.tool { background: #2a2a32; color: #aaa; }
+</style>
+</head>
+<body>
+
+<h1>Adelaide — Working Links</h1>
+<div class="sub">Click headers to collapse. All links open in new windows.</div>
+
+<div class="grid">
+
+<div class="section" onclick="this.classList.toggle('collapsed')">
+  <div class="section-title staging">Staging (Web Pages) <span class="chevron">▼</span></div>
+  <div class="links" onclick="event.stopPropagation()">
+    <a href="https://adelaide-2713ba.webflow.io/" target="_blank"><span class="badge web">WEB</span><span class="label">Home</span><span class="url">/</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/food" target="_blank"><span class="badge web">WEB</span><span class="label">Food</span><span class="url">/food</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/beverages" target="_blank"><span class="badge web">WEB</span><span class="label">Beverage</span><span class="url">/beverages</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/hours-location" target="_blank"><span class="badge web">WEB</span><span class="label">Hours & Location</span><span class="url">/hours-location</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/private-events" target="_blank"><span class="badge web">WEB</span><span class="label">Private Events</span><span class="url">/private-events</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/contact" target="_blank"><span class="badge web">WEB</span><span class="label">Contact</span><span class="url">/contact</span></a>
+  </div>
+</div>
+
+<div class="section" onclick="this.classList.toggle('collapsed')">
+  <div class="section-title print">Print Menus (Staging) <span class="chevron">▼</span></div>
+  <div class="links" onclick="event.stopPropagation()">
+    <a href="https://adelaide-2713ba.webflow.io/resources/home" target="_blank"><span class="badge print">HUB</span><span class="label">Resource Hub</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/main" target="_blank"><span class="badge print">PRINT</span><span class="label">Food Menu (Main)</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/dessert" target="_blank"><span class="badge print">PRINT</span><span class="label">Dessert Menu</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/lounge" target="_blank"><span class="badge print">PRINT</span><span class="label">Lounge Menu</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits" target="_blank"><span class="badge print">PRINT</span><span class="label">SecBev P1 — Spirits</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl" target="_blank"><span class="badge print">PRINT</span><span class="label">SecBev P2 — White/Rosé</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl" target="_blank"><span class="badge print">PRINT</span><span class="label">SecBev P3 — Red/Sparkling</span></a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na" target="_blank"><span class="badge print">PRINT</span><span class="label">SecBev P4 — Non-Alcoholic</span></a>
+  </div>
+</div>
+
+<div class="section" onclick="this.classList.toggle('collapsed')">
+  <div class="section-title designer">Webflow Designer Pages <span class="chevron">▼</span></div>
+  <div class="links" onclick="event.stopPropagation()">
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=691d06afc60866495ed99ceb" target="_blank"><span class="badge tool">DES</span><span class="label">Home</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=6956c9a24d9f7955becf88b2" target="_blank"><span class="badge tool">DES</span><span class="label">Food</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c2d7e769ee049689d8817b" target="_blank"><span class="badge tool">DES</span><span class="label">Beverage</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69740ca2ed6cca7c9533b685" target="_blank"><span class="badge tool">DES</span><span class="label">Food Menu (Print)</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=697c13cbcd548166fee3d0d2" target="_blank"><span class="badge tool">DES</span><span class="label">Dessert (Print)</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c441c5405ff602713c7162" target="_blank"><span class="badge tool">DES</span><span class="label">Lounge (Print)</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c461e1531200ee0c0166fe" target="_blank"><span class="badge tool">DES</span><span class="label">SecBev P1 — Spirits</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c502d75005c56967443ef2" target="_blank"><span class="badge tool">DES</span><span class="label">SecBev P2 — White/Rosé</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c50c05f16c20b935fcae8c" target="_blank"><span class="badge tool">DES</span><span class="label">SecBev P3 — Red/Sparkling</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c50cbf8fc0392650354ecd" target="_blank"><span class="badge tool">DES</span><span class="label">SecBev P4 — NA</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=697caa205daeb0560aa6319d" target="_blank"><span class="badge tool">DES</span><span class="label">Resource Hub</span></a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c40f4f2cbf0a988fa20c09" target="_blank"><span class="badge tool">DES</span><span class="label">Style Guide</span></a>
+  </div>
+</div>
+
+<div class="section" onclick="this.classList.toggle('collapsed')">
+  <div class="section-title tools">Tools <span class="chevron">▼</span></div>
+  <div class="links" onclick="event.stopPropagation()">
+    <a href="https://docs.google.com/spreadsheets/d/1KQh4BZ5k9ldMAsI8TmDZOF_EzoP47OSt99EFnRRHcqY/edit" target="_blank"><span class="badge tool">SHEET</span><span class="label">Adelaide Menu Additions</span></a>
+    <a href="https://bdmartel.github.io/adelaide/review-tracker.html" target="_blank"><span class="badge tool">QA</span><span class="label">Review Tracker (37 items)</span></a>
+    <a href="file:///Users/a7-13-2024/projects/adelaide/tracker.html" target="_blank"><span class="badge tool">TRACK</span><span class="label">Deliverables Tracker</span></a>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

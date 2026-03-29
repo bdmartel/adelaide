@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adelaide QA Sheet — 2026-03-27</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #fff; color: #222;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt; line-height: 1.45;
+    padding: 16px; max-width: 880px; margin: 0 auto;
+  }
+  header {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
+    border-bottom: 2px solid #222; padding-bottom: 8px; flex-wrap: wrap;
+  }
+  h1 { font-size: 13pt; font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; }
+  .sub { font-size: 8pt; color: #888; }
+  .sec-hdr {
+    font-size: 8pt; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #222; margin: 16px 0 4px;
+    border-bottom: 1px solid #ddd; padding-bottom: 3px;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .sec-links { margin-left: auto; display: flex; gap: 6px; }
+  .sec-links a {
+    font-size: 7pt; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; color: #0277bd; text-decoration: none;
+    border: 1px solid #ccc; padding: 2px 6px;
+  }
+  .sec-links a:hover { background: #f0f0f0; border-color: #888; }
+  .sec-links a.des { color: #8b5e00; }
+  .sec-links a.spec { color: #6a3aad; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.5pt; margin-bottom: 2px; }
+  th {
+    background: #222; color: #fff; text-transform: uppercase; font-size: 6.5pt;
+    letter-spacing: 0.06em; font-weight: 700; padding: 4px 8px; text-align: left;
+  }
+  th.status { width: 50px; text-align: center; }
+  th.id { width: 28px; }
+  th.links { width: 160px; text-align: right; }
+  td { padding: 5px 8px; vertical-align: top; }
+  td.id { font-weight: 700; color: #888; font-size: 7.5pt; }
+  td.status { text-align: center; }
+  td.links { text-align: right; white-space: nowrap; }
+  td.links a {
+    font-size: 6.5pt; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.03em; text-decoration: none; color: #0277bd;
+    margin-left: 6px;
+  }
+  td.links a.des { color: #8b5e00; }
+  td.links a:hover { text-decoration: underline; }
+  tbody tr:nth-child(even) td { background: #f5f5f5; }
+  tbody tr:hover td { background: #e8f0ff; }
+  .summary { font-weight: 600; }
+  .detail { font-size: 7.5pt; color: #666; margin-top: 2px; }
+  .tag-fixed { font-size: 6pt; font-weight: 700; color: #2e7d32; text-transform: uppercase; background: #e8f5e9; padding: 1px 4px; border-radius: 2px; }
+  .tag-broken { font-size: 6pt; font-weight: 700; color: #c62828; text-transform: uppercase; background: #ffebee; padding: 1px 4px; border-radius: 2px; }
+  .tag-check { font-size: 6pt; font-weight: 700; color: #e65100; text-transform: uppercase; background: #fff3e0; padding: 1px 4px; border-radius: 2px; }
+  .chk { width: 14px; height: 14px; cursor: pointer; accent-color: #222; }
+  .img-row td { padding: 4px 8px; }
+  .ref-img { max-width: 100%; border: 1px solid #ddd; margin: 4px 0; cursor: pointer; }
+  .ref-img:hover { border-color: #888; }
+  .stat-bar { display: flex; gap: 12px; font-size: 7.5pt; color: #888; margin-bottom: 14px; }
+  .stat-bar b { color: #222; }
+  @media print {
+    .sec-links, td.links, .chk, .stat-bar { display: none; }
+    body { padding: 0; }
+    th { background: #222 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    tbody tr:nth-child(even) td { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Adelaide QA Sheet</h1>
+  <span class="sub">2026-03-27 — Visual review vs Kristen callouts</span>
+</header>
+
+<div class="stat-bar">
+  <span><b>5</b> fixed</span>
+  <span><b>5</b> data/content broken</span>
+  <span><b>18</b> spacing/layout (designer)</span>
+  <span><b>28</b> total items</span>
+</div>
+
+<!-- CONFIRMED FIXED -->
+<div class="sec-hdr">Confirmed Fixed</div>
+<table>
+<thead><tr><th class="status">✓</th><th>Item</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td class="status"><span class="tag-fixed">fixed</span></td><td class="summary">Light Bites: Fennel Salad (was Balvenie)</td><td>CMS updated via API, confirmed on lounge page</td></tr>
+<tr><td class="status"><span class="tag-fixed">fixed</span></td><td class="summary">*Seasonal Desserts asterisk</td><td>Confirmed on food web page screenshot</td></tr>
+<tr><td class="status"><span class="tag-fixed">fixed</span></td><td class="summary">Meyer Lemon (was Lemono)</td><td>Fixed in Sheet + CMS, confirmed on beverage page</td></tr>
+<tr><td class="status"><span class="tag-fixed">fixed</span></td><td class="summary">St-Germain hyphen (was non-breaking)</td><td>Fixed in Sheet, confirmed on beverage page</td></tr>
+<tr><td class="status"><span class="tag-fixed">fixed</span></td><td class="summary">INTL Whiskey: Balvenie + Russell's spelling</td><td>CMS updated via API tonight</td></tr>
+</tbody>
+</table>
+
+<!-- DATA / CONTENT — STILL BROKEN -->
+<div class="sec-hdr">Data / Content — Still Broken
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits" target="_blank">SB1 Staging</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl" target="_blank">SB3 Staging</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/main" target="_blank">Food Print</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th><th class="links">Fix</th></tr></thead>
+<tbody>
+<tr>
+  <td class="status"><input type="checkbox" class="chk"></td>
+  <td class="id">33</td>
+  <td class="summary">"WINES BY TTHE GLASS" — double T</td>
+  <td class="detail">Static text on food print page. Not CMS.</td>
+  <td class="links"><a href="https://adelaide-2713ba.design.webflow.com?pageId=69740ca2ed6cca7c9533b685" class="des" target="_blank">Designer ↗</a></td>
+</tr>
+<tr>
+  <td class="status"><input type="checkbox" class="chk"></td>
+  <td class="id">—</td>
+  <td class="summary">"Arette Gran Clas" — missing E in tequila</td>
+  <td class="detail">One tequila CMS item still has "Clas" not "Clase". Fix in CMS.</td>
+  <td class="links"><a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits" target="_blank">Staging ↗</a> <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c461e1531200ee0c0166fe" class="des" target="_blank">Designer ↗</a></td>
+</tr>
+<tr>
+  <td class="status"><input type="checkbox" class="chk"></td>
+  <td class="id">—</td>
+  <td class="summary">Lorem ipsum in Sparkling P3</td>
+  <td class="detail">Doyard entry has "ipsum dolor sit amet..." as description instead of "Champagne, FR"</td>
+  <td class="links"><a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl" target="_blank">Staging ↗</a> <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c50c05f16c20b935fcae8c" class="des" target="_blank">Designer ↗</a></td>
+</tr>
+<tr>
+  <td class="status"><input type="checkbox" class="chk"></td>
+  <td class="id">—</td>
+  <td class="summary">Whiskey AMER showing ~8 items (should be 18)</td>
+  <td class="detail">Collection List limit too low. Increase to 20+ in Designer.</td>
+  <td class="links"><a href="https://adelaide-2713ba.design.webflow.com?pageId=69c461e1531200ee0c0166fe" class="des" target="_blank">Designer ↗</a></td>
+</tr>
+<tr>
+  <td class="status"><input type="checkbox" class="chk"></td>
+  <td class="id">—</td>
+  <td class="summary">Whiskey INTL showing ~10 items (should be 18)</td>
+  <td class="detail">Same — Collection List limit. Increase to 20+.</td>
+  <td class="links"><a href="https://adelaide-2713ba.design.webflow.com?pageId=69c461e1531200ee0c0166fe" class="des" target="_blank">Designer ↗</a></td>
+</tr>
+</tbody>
+</table>
+
+<!-- PRINT — SECBEV SPIRITS -->
+<div class="sec-hdr">Print — SecBev Spirits (Kristen callouts)
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-1-spirits" target="_blank">Staging</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c461e1531200ee0c0166fe" class="des" target="_blank">Designer</a>
+    <a href="docs/ADELAIDE_SecBev_3Page_03.pdf" class="spec" target="_blank">Design PDF</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">1</td><td class="summary">Vertically center page content</td><td class="detail">Screenshot shows content top-heavy with empty space at bottom</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">2</td><td class="summary">Fix flipped margins — columns should differ</td><td class="detail">Kristen: "the middle two are the same when they should be unique"</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">3</td><td class="summary">Increase spacing between brandy/rum/vodka</td><td class="detail">Too tight, reads as running list. Add div spacers.</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">4</td><td class="summary">Fix price double-spacing</td><td class="detail">Items without descriptions have extra gap before price. Vodka (18) floats right.</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">5</td><td class="summary">Verify script font sizes match</td><td class="detail">Whiskey page may be outlier vs white/red/rosé</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">6</td><td class="summary">Fix page numbering P1-P4</td><td class="detail">P1 shows number, P2-4 don't</td></tr>
+</tbody>
+</table>
+
+<!-- PRINT — SECBEV WINES -->
+<div class="sec-hdr">Print — SecBev Wines BTL
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-2-wines-btl" target="_blank">P2</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-3-wines-btl" target="_blank">P3</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c502d75005c56967443ef2" class="des" target="_blank">P2 Des</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c50c05f16c20b935fcae8c" class="des" target="_blank">P3 Des</a>
+    <a href="docs/ADELAIDE_SecBev_3Page_03.pdf" class="spec" target="_blank">Design PDF</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">7</td><td class="summary">P3: Widen body copy margin on red</td><td class="detail">"2022" orphaned. Use sparkling as reference width.</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">8</td><td class="summary">P3: Fix grommet margin — red=1.75", white=1.5"</td><td class="detail">Red section too close to grommets.</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">32</td><td class="summary">P2: Script titles may be too small</td><td class="detail">Kristen: "These titles look small to me." Verify size.</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">34</td><td class="summary">P3: Red margin same as white + sparkling spacing tight</td><td class="detail">White=1.5" from left, Red=1.75". Sparkling inconsistent.</td></tr>
+</tbody>
+</table>
+
+<!-- PRINT — NA -->
+<div class="sec-hdr">Print — SecBev Non-Alcoholic
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/secondary-beverage-page-4-na" target="_blank">Staging</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c50cbf8fc0392650354ecd" class="des" target="_blank">Designer</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">9</td><td class="summary">Fix double spacing beers/soft drinks</td><td class="detail">Same root cause as #4 — empty description padding</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">10</td><td class="summary">Fix 3rd-line description spacing</td><td class="detail">3rd line not equidistant on NA page</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">35</td><td class="summary">"soft drinks" spacing tighter than other sections</td><td class="detail">Screenshot confirms gap before soft drinks looks smaller</td></tr>
+</tbody>
+</table>
+
+<!-- PRINT — LOUNGE -->
+<div class="sec-hdr">Print — Lounge Menu
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/lounge" target="_blank">Staging</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c441c5405ff602713c7162" class="des" target="_blank">Designer</a>
+    <a href="docs/ADELAIDE_CocktailLounge_11x8.5_02.pdf" class="spec" target="_blank">Design PDF</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">13</td><td class="summary">Summer Squash 3rd-line wrapping</td><td class="detail">"cornbread touching sheep's yogurt"</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">36</td><td class="summary">All spacing too tight — items running together</td><td class="detail">Kristen: "doesn't align with my original designs"</td></tr>
+</tbody>
+</table>
+
+<!-- PRINT — FOOD -->
+<div class="sec-hdr">Print — Food Menu
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/resources/printable-menus/main" target="_blank">Staging</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69740ca2ed6cca7c9533b685" class="des" target="_blank">Designer</a>
+    <a href="docs/ADELAIDE_FoodMenu_8.5x11_02.pdf" class="spec" target="_blank">Design PDF</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">14</td><td class="summary">Move raw disclaimer to LEFT side</td><td class="detail">Currently on wrong side per Kristen's design</td></tr>
+</tbody>
+</table>
+
+<!-- WEB — FOOD -->
+<div class="sec-hdr">Web — Food Page
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/food" target="_blank">Staging</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=6956c9a24d9f7955becf88b2" class="des" target="_blank">Designer</a>
+    <a href="docs/Adelaide_WEB_MenuAdditions_R1_02.pdf" class="spec" target="_blank">Web Mockup</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">16</td><td class="summary">Fix footer pinching (desktop + mobile)</td><td class="detail">Footer at position zero, no breathing room</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">17</td><td class="summary">Fix left-justification on mobile</td><td class="detail">Section titles misaligned on mobile</td></tr>
+</tbody>
+</table>
+
+<!-- WEB — BEVERAGE -->
+<div class="sec-hdr">Web — Beverage Page
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/beverages" target="_blank">Staging</a>
+    <a href="https://adelaide-2713ba.design.webflow.com?pageId=69c2d7e769ee049689d8817b" class="des" target="_blank">Designer</a>
+    <a href="docs/Adelaide_WEB_MenuAdditions_R1_02.pdf" class="spec" target="_blank">Web Mockup</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">18</td><td class="summary">Corkage fee — remove hard line break</td><td class="detail">Line break between title and description. Desktop + mobile.</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">19</td><td class="summary">Section title alignment on mobile</td><td class="detail">Wine sub-headings left-justified incorrectly</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">20</td><td class="summary">Footer pinching on mobile</td><td class="detail">Same as food page</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">29</td><td class="summary">Section spacers too big vs food page</td><td class="detail">Screenshot: gap between COCKTAILS → WINES is notably larger than food page</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">30</td><td class="summary">Wine sub-heading spacing uneven</td><td class="detail">Gaps between white → sparkling → red → BEER should be equal</td></tr>
+</tbody>
+</table>
+
+<!-- DELIVERY -->
+<div class="sec-hdr">Delivery
+  <div class="sec-links">
+    <a href="https://adelaide-2713ba.webflow.io/" target="_blank">Staging Home</a>
+    <a href="https://adelaide-2713ba.webflow.io/resources/home" target="_blank">Resource Hub</a>
+    <a href="https://docs.google.com/spreadsheets/d/1KQh4BZ5k9ldMAsI8TmDZOF_EzoP47OSt99EFnRRHcqY/edit" target="_blank">Sheet</a>
+  </div>
+</div>
+<table>
+<thead><tr><th class="status"></th><th class="id">#</th><th>Issue</th><th>Detail</th></tr></thead>
+<tbody>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">22</td><td class="summary">Send staging link to Kristen</td><td class="detail">After all tweaks. Draft is in Gmail.</td></tr>
+<tr><td class="status"><input type="checkbox" class="chk"></td><td class="id">24</td><td class="summary">Update Google Sheet link + RED BAR on old sheet</td><td class="detail">Resource page → new sheet</td></tr>
+</tbody>
+</table>
+
+</body>
+</html>

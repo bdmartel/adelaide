@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Adelaide</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Inter, system-ui, sans-serif; background: #111; color: #eee; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.4rem; margin-bottom: .3rem; color: #fff; }
+  #status { color: #666; font-size: .75rem; margin-bottom: 1.5rem; }
+
+  /* Nav tabs */
+  .menu-nav { display: flex; gap: .5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .menu-nav button { background: #1a1a1a; color: #999; border: 1px solid #333; padding: .5rem 1rem; font-size: .8rem; font-family: Inter, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; border-radius: 2px; }
+  .menu-nav button.active { background: #fff; color: #111; border-color: #fff; }
+  .menu-nav button:hover:not(.active) { border-color: #666; color: #ccc; }
+
+  /* Menu panel */
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+  .menu-title { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .12em; color: #fff; margin-bottom: 1.5rem; padding-bottom: .5rem; border-bottom: 2px solid #333; }
+
+  .section { margin-bottom: 2rem; }
+  .section-title { font-size: .85rem; text-transform: uppercase; letter-spacing: .1em; color: #666; margin-bottom: .8rem; }
+  .item { display: flex; justify-content: space-between; align-items: baseline; padding: .5rem 0; border-bottom: 1px solid #1a1a1a; }
+  .item:last-child { border-bottom: none; }
+  .item-main { flex: 1; }
+  .item-name { color: #eee; font-size: .95rem; }
+  .item-desc { color: #777; font-size: .8rem; margin-top: .15rem; }
+  .item-price { color: #6c6; font-family: 'JetBrains Mono', monospace; font-size: .9rem; margin-left: 1.5rem; white-space: nowrap; }
+  #error { color: #c66; margin: 2rem 0; }
+
+  @media print {
+    body { background: #fff; color: #000; padding: 1rem; }
+    h1, .menu-title { color: #000; }
+    .menu-nav { display: none; }
+    .menu-panel { display: block !important; page-break-after: always; }
+    .menu-panel:last-child { page-break-after: avoid; }
+    .section-title { color: #333; }
+    .item { border-bottom-color: #eee; }
+    .item-name { color: #000; }
+    .item-desc { color: #555; }
+    .item-price { color: #000; }
+    #status { display: none; }
+  }
+</style>
+</head>
+<body>
+<h1>Adelaide</h1>
+<div id="status">Loading...</div>
+<div class="menu-nav" id="nav"></div>
+<div id="menus"></div>
+<div id="error"></div>
+<script>
+const API_KEY = 'AIzaSyCft5UbAmq_e6ttyjVZwRCh_DvsKdJo4Ho';
+const SHEET_ID = '14GOE6KlWWyvh0LvwXsK_R4g7haVHteIlGJj0cwl0FD4';
+const RANGE = 'Sheet1';
+const URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+
+// Define which sections appear on which menus (overlap is intentional)
+const MENU_DEFS = [
+  {
+    id: 'dinner',
+    label: 'Dinner',
+    title: 'Dinner Menu',
+    sections: ['LIGHT BITES', 'FOOD > PASTA', 'FOOD > MAIN', 'DESSERTS', 'WINES > WHITE', 'WINES > RED']
+  },
+  {
+    id: 'beverages',
+    label: 'Beverages',
+    title: 'Beverage Menu',
+    sections: ['COCKTAILS', 'WINES > WHITE', 'WINES > RED']
+  },
+  {
+    id: 'lounge',
+    label: 'Lounge',
+    title: 'Cocktail Lounge',
+    sections: ['COCKTAILS', 'LIGHT BITES', 'DESSERTS']
+  },
+  {
+    id: 'all',
+    label: 'Full Menu',
+    title: 'Complete Menu',
+    sections: null // show everything
+  }
+];
+
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function renderSection(sectionName, items) {
+  items.sort((a, b) => a.order - b.order);
+  let html = `<div class="section">`;
+  html += `<div class="section-title">${esc(sectionName)}</div>`;
+  items.forEach(item => {
+    html += `<div class="item">`;
+    html += `<div class="item-main">`;
+    html += `<div class="item-name">${esc(item.name)}</div>`;
+    if (item.desc) html += `<div class="item-desc">${esc(item.desc)}</div>`;
+    html += `</div>`;
+    html += `<div class="item-price">${esc(item.price)}</div>`;
+    html += `</div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
+function switchMenu(id) {
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.menu-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelector(`[data-menu="${id}"]`).classList.add('active');
+}
+
+async function fetchMenu() {
+  try {
+    const resp = await fetch(URL);
+    if (!resp.ok) throw new Error(`API ${resp.status}`);
+    const data = await resp.json();
+    const rows = data.values;
+    if (!rows || rows.length < 2) { document.getElementById('error').textContent = 'No data found.'; return; }
+
+    // Parse all rows into section map
+    const allSections = new Map();
+    rows.slice(1).forEach(r => {
+      const section = r[0] || 'Other';
+      if (!allSections.has(section)) allSections.set(section, []);
+      allSections.get(section).push({
+        name: r[1] || '',
+        desc: r[2] || '',
+        price: r[3] || '',
+        order: parseInt(r[4]) || 999
+      });
+    });
+
+    // Build nav
+    let navHtml = '';
+    MENU_DEFS.forEach(m => {
+      navHtml += `<button data-menu="${m.id}" onclick="switchMenu('${m.id}')">${esc(m.label)}</button>`;
+    });
+    document.getElementById('nav').innerHTML = navHtml;
+
+    // Build each menu panel
+    let menusHtml = '';
+    MENU_DEFS.forEach(m => {
+      menusHtml += `<div class="menu-panel" id="panel-${m.id}">`;
+      menusHtml += `<div class="menu-title">${esc(m.title)}</div>`;
+
+      if (m.sections === null) {
+        // Full menu — show all sections in sheet order
+        allSections.forEach((items, name) => {
+          menusHtml += renderSection(name, items);
+        });
+      } else {
+        // Filtered — show only matching sections
+        m.sections.forEach(sName => {
+          if (allSections.has(sName)) {
+            menusHtml += renderSection(sName, allSections.get(sName));
+          }
+        });
+      }
+
+      menusHtml += `</div>`;
+    });
+    document.getElementById('menus').innerHTML = menusHtml;
+
+    // Activate first tab
+    switchMenu(MENU_DEFS[0].id);
+
+    document.getElementById('status').textContent = `Live from Google Sheets \u00b7 ${new Date().toLocaleTimeString()}`;
+  } catch (e) {
+    document.getElementById('error').textContent = 'Could not load menu: ' + e.message;
+    console.error(e);
+  }
+}
+
+fetchMenu();
+setInterval(fetchMenu, 30000);
+</script>
+</body>
+</html>

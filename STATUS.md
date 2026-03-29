@@ -67,12 +67,20 @@
 - Mar 5: Kristen sent detailed analysis, estimated Ben's time at $500-$1200
 - Mar 5: Ben agreed with Kristen's approach, no work started
 
-### Current Status (Mar 18, 2026)
+### Current Status (Mar 19, 2026)
 - Restaurant has been open ~2 months, site is live and stable
-- Next round of site changes in progress — Kristen is finalizing designs
-- Waiting on final design rounds from Kristen before implementation begins
+- **Designs finalized.** All PDFs and assets received from Kristen (Mar 18-19).
+- Revised SecBev v03 received Mar 19; InDesign source files incoming.
+- Kristen confirming increased costs with client (Mar 19).
 - Webflow MCP server connected to Claude Code (configured 2026-03-18) for direct site management
-
+- **Implementation ready to begin** — see `TASKS.md` for full tracker
 
 ## Docs
+- `TASKS.md` - **Active task tracker** for menu additions implementation
 - `docs/adelaide-quick-reference.md` - Variable/naming quick reference card
+- `docs/kristen-call-spec-2026-03-18.md` - Implementation spec from Zoom call
+- `docs/Adelaide_WEB_MenuAdditions_R1_02.pdf` - Website mockup spec (13pp)
+- `docs/ADELAIDE_FoodMenu_8.5x11_02.pdf` - Print food menu with annotations
+- `docs/ADELAIDE_CocktailLounge_11x8.5_02.pdf` - Print cocktail lounge menu
+- `docs/ADELAIDE_SecBev_3Page_03.pdf` - Secondary beverage menu v03
+- `docs/indesigns/` - SVG/PNG/AI assets for beverage page

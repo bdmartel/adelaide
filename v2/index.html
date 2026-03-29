@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Adelaide Restaurant | Woodcliff Lake, NJ Dining</title>
+<meta name="description" content="Experience Adelaide Restaurant in Woodcliff Lake, NJ. Reserve your table today at 42 Kinderkamack Rd for exceptional dining.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Adelaide Restaurant | Woodcliff Lake, NJ Dining">
+<meta property="og:description" content="Experience Adelaide Restaurant in Woodcliff Lake, NJ. Reserve your table today at 42 Kinderkamack Rd for exceptional dining.">
+<meta property="og:image" content="assets/og-image.png">
+<meta property="og:type" content="website">
+<link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<script src="https://use.typekit.net/fgl6weu.js"></script>
+<script>try{Typekit.load();}catch(e){}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://adelaidenj.com/#restaurant",
+  "name": "Adelaide Restaurant",
+  "url": "https://adelaidenj.com/",
+  "description": "Adelaide Restaurant in Woodcliff Lake, NJ. Reserve your table for exceptional dining.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "42 Kinderkamack Rd",
+    "addressLocality": "Woodcliff Lake",
+    "addressRegion": "NJ",
+    "postalCode": "07677",
+    "addressCountry": "US"
+  },
+  "sameAs": ["https://www.instagram.com/here_at_adelaide/"],
+  "hasMenu": "https://adelaidenj.com/todays-menu"
+}
+</script>
+<style>
+/* === CSS Variables === */
+:root {
+  --dark: #35190d;
+  --fontscript: "Saint Andrews Queen Adelaide Stanneqn", Georgia, sans-serif;
+  --colorwhite: #fff;
+  --fontbody: Montserrat, sans-serif;
+  --backgroundcolor: #e6e2de;
+  --font9px: .5625rem;
+  --font12px: .75rem;
+  --font14px: .875rem;
+  --font15px: .9375rem;
+  --font16px: 1rem;
+  --font18px: 1.125rem;
+  --font24px: 1.5rem;
+  --weight-bold: 700;
+  --weight-regular: 400;
+  --link-weight: 600;
+  --distance-from-nav: 4rem;
+  --footeroffset: -6vh;
+  --maxcontw: 39.6875rem;
+  --tanbg: #9b632b0f;
+  --dark-fader: #35190d8a;
+}
+
+/* === Reset === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+img { border: 0; max-width: 100%; display: block; }
+ul { list-style: none; padding: 0; margin: 0; }
+a { color: var(--dark); text-decoration: none; font-weight: 500; }
+a:hover { font-weight: 600; }
+strong { font-weight: bold; }
+p { text-align: center; margin-bottom: 10px; }
+
+/* === Body === */
+body {
+  color: var(--dark);
+  font-family: var(--fontbody);
+  font-size: 16px;
+  background-color: var(--backgroundcolor);
+  background-image: url("assets/bg-texture.png");
+  background-position: 100% 100%;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* === Navigation === */
+.navbar {
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.nav-wrapper {
+  justify-content: flex-end;
+  align-items: flex-start;
+  display: flex;
+}
+
+/* RESERVATIONS button: exact Webflow values */
+.btn-reservations-top {
+  font-family: var(--fontbody);
+  color: var(--dark);
+  font-size: var(--font15px);
+  letter-spacing: .1em;
+  background-color: transparent;
+  border: 1px solid #231f2087;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  padding: 0 20px;
+  line-height: 2;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.btn-reservations-top:hover {
+  background-color: var(--dark);
+  color: var(--colorwhite);
+}
+.btn-reservations-top.menopen {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Hamburger: exact Webflow values (w-nav-button + menu-button-3) */
+.hamburger {
+  float: right;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  padding: 18px;
+  padding-top: 30px;
+  padding-bottom: 0;
+  font-size: 24px;
+  display: block;
+  position: relative;
+  background: none;
+  border: none;
+}
+.hamburger img { width: 35px; }
+.hamburger:hover { opacity: .5; }
+
+/* Slide-in nav menu — hidden by default, slides from right */
+.nav-menu {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.05);
+  min-width: 300px;
+  padding: 0 14px 20px 14px;
+  text-align: center;
+  z-index: 1001;
+  transition: right 0.4s ease;
+  overflow-y: auto;
+}
+.nav-menu.open { right: 0; }
+
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+}
+.nav-overlay.open { display: block; }
+
+.navlink {
+  color: var(--dark);
+  font-size: var(--font15px);
+  text-align: center;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-decoration: none;
+  padding: 20px;
+  display: block;
+}
+.navlink:hover { font-weight: 500; }
+.navlink:active, .navlink:focus { color: var(--dark); }
+.navlink.active { font-weight: 600; }
+
+/* Show Hours + Location separately, hide combined */
+.navlink.hrsloc { display: none; }
+.navlink.hrs, .navlink.loc { display: block; }
+
+.nav-underline { width: 189px; margin: 10px auto; display: block; }
+.nav-instagram-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 10px;
+}
+.nav-instagram { width: 30px; opacity: 1; }
+.nav-instagram:hover { opacity: .69; }
+
+/* Reservations button inside slide-in nav */
+.btn-reservations-nav {
+  font-family: var(--fontbody);
+  color: var(--dark);
+  font-size: var(--font15px);
+  letter-spacing: .1em;
+  background: transparent;
+  border: 1px solid #231f2087;
+  padding: 0 20px;
+  line-height: 2;
+  cursor: pointer;
+  margin: 30px auto 0;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.btn-reservations-nav:hover {
+  background-color: var(--dark);
+  color: var(--backgroundcolor);
+}
+
+/* Desktop nav wrapper is unused — hamburger at all sizes */
+.nav-desktop { display: none; }
+
+/* === Page sections === */
+.page { display: none; flex: 1; flex-direction: column; }
+.page.active { display: flex; }
+
+/* === HOME === */
+.home-content {
+  letter-spacing: .15em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 65vh;
+}
+.home-illustration-wrap {
+  text-align: center;
+  width: 450px;
+  max-width: 100%;
+  margin: 0 auto 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+.home-illustration { width: 85%; margin-bottom: 17px; }
+.home-logo {
+  width: 100%;
+}
+.home-address-desktop {
+  letter-spacing: .15em;
+  font-size: .8rem;
+  font-weight: var(--weight-regular);
+  margin-bottom: 8px;
+  display: block;
+  text-align: center;
+}
+.home-address-mobile {
+  display: none;
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: var(--font12px);
+}
+.home-instagram {
+  text-align: center;
+  font-size: .8rem;
+  font-weight: var(--weight-regular);
+}
+.home-instagram-mobile {
+  display: none;
+  text-align: center;
+  width: 100%;
+  margin-top: 30px;
+  font-size: var(--font12px);
+  font-weight: var(--link-weight);
+}
+
+/* Mobile home buttons */
+.home-mobile-buttons {
+  display: none;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  gap: 12px;
+}
+.btn-mobile-home {
+  font-family: var(--fontbody);
+  color: var(--dark);
+  font-size: var(--font18px);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid rgba(35,31,32,0.53);
+  padding: 0 20px;
+  line-height: 2;
+  font-weight: 300;
+  width: 100%;
+  cursor: pointer;
+  display: block;
+}
+.btn-mobile-home:hover {
+  background-color: var(--dark);
+  color: var(--backgroundcolor);
+}
+
+/* === MENU PAGE === */
+.menu-page-wrap {
+  padding-top: var(--distance-from-nav);
+  width: 577px;
+  max-width: 100%;
+  margin: 0 auto 6rem;
+}
+.menu-header-wrap {
+  width: 100%;
+  display: flex;
+}
+.menu-header-inner {
+  width: 305px;
+  max-width: 100%;
+  margin: 0 auto 3rem;
+}
+.menu-header-img { width: 100%; }
+.menu-sections { margin-bottom: 30px; }
+.menu-section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 4px;
+  position: relative;
+}
+.menu-section-title {
+  font-family: var(--fontbody);
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 26px;
+}
+.menu-underline {
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 10px;
+  position: absolute;
+  bottom: 0;
+  left: -6px;
+}
+.menu-underline.starters {
+  background-image: url("assets/underline-starter.png");
+  width: 100px;
+}
+.menu-underline.pasta {
+  background-image: url("assets/underline-pasta.png");
+  background-position: 0%;
+  width: 77px;
+  height: 3px;
+  left: -7px;
+}
+.menu-underline.mains {
+  background-image: url("assets/underline-starter.png");
+  width: 62px;
+  height: 3px;
+  left: -8px;
+}
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 27px;
+}
+.menu-items.last { margin-bottom: 35px; }
+.menu-item {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0;
+}
+.menu-item-line {
+  font-size: var(--font15px);
+  letter-spacing: .05em;
+  line-height: 1.8;
+}
+.menu-item-name {
+  font-weight: 700;
+  display: inline;
+}
+.menu-item-desc {
+  margin-left: .35em;
+  display: inline;
+}
+.menu-footnote {
+  margin-bottom: 27px;
+}
+.menu-footnote .menu-item-name { font-weight: 700; }
+
+/* === CENTERED PAGES (Hours, Location, etc.) === */
+.centered-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 4%;
+  font-size: var(--font15px);
+  letter-spacing: .15em;
+  line-height: 2;
+}
+.centered-page.narrow { max-width: 700px; }
+.centered-header-img {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 20px;
+}
+.centered-header-img.dining-hours { max-width: 320px; }
+.centered-header-img.location { max-width: 320px; }
+.centered-header-img.private-events { max-width: 320px; }
+.centered-header-img.contact { max-width: 260px; }
+.centered-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.centered-tagline {
+  font-size: var(--font15px);
+  letter-spacing: .15em;
+  margin-bottom: 10px;
+}
+.centered-underline {
+  width: 57px;
+  height: 3px;
+  margin-bottom: 20px;
+}
+.centered-hours {
+  text-align: center;
+  margin-bottom: 0;
+  letter-spacing: .15em;
+}
+.centered-address { text-align: center; margin-bottom: 20px; }
+.centered-map {
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  margin-top: 0;
+}
+.centered-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Hours/Location combined page */
+.hrs-loc-section {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hrs-loc-section + .hrs-loc-section {
+  margin-top: 40px;
+}
+
+/* === PRIVATE EVENTS === */
+.pe-content {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 30px;
+}
+.pe-tagline {
+  font-size: var(--font15px);
+  letter-spacing: .15em;
+  margin-bottom: 10px;
+}
+.pe-underline {
+  width: 57px;
+  height: 3px;
+  margin-bottom: 20px;
+}
+.pe-description {
+  font-size: var(--font15px);
+  letter-spacing: .15em;
+  line-height: 2;
+  max-width: var(--maxcontw);
+  margin-bottom: 20px;
+}
+.btn-inquire {
+  font-family: var(--fontbody);
+  color: var(--dark);
+  font-size: var(--font15px);
+  letter-spacing: .1em;
+  background: transparent;
+  border: 1px solid rgba(35,31,32,0.53);
+  padding: 0 20px;
+  line-height: 2;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.btn-inquire:hover {
+  background-color: var(--dark);
+  color: var(--colorwhite);
+}
+
+/* Inquiry Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.1);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-content {
+  background: var(--backgroundcolor);
+  width: 60vw;
+  max-width: 790px;
+  padding: 0;
+  position: relative;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+}
+.modal-to {
+  font-family: var(--fontbody);
+  font-size: var(--font12px);
+  letter-spacing: .1em;
+  margin-right: 12px;
+}
+.modal-logo { width: 270px; }
+.modal-close {
+  margin-left: auto;
+  font-size: 2em;
+  font-weight: 100;
+  color: var(--dark);
+  cursor: pointer;
+  transform: rotate(45deg);
+  line-height: 1;
+  border: none;
+  background: none;
+  padding: 0;
+}
+.modal-form {
+  padding: 0 20px 20px;
+}
+.modal-textarea {
+  width: 100%;
+  height: 307px;
+  background-color: var(--tanbg);
+  border: 1px solid rgba(0,0,0,0.12);
+  color: var(--dark);
+  font-family: var(--fontbody);
+  font-size: var(--font15px);
+  letter-spacing: .1em;
+  padding: 10px 19px 10px 10px;
+  line-height: 2.9;
+  resize: none;
+  margin-bottom: 23px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2.95em - 1px),
+    rgba(0,0,0,0.12) calc(2.95em - 1px),
+    rgba(0,0,0,0.12) 2.95em
+  );
+  background-position: 0 -6px;
+  background-origin: content-box;
+  background-clip: content-box;
+}
+.modal-textarea::placeholder { color: rgba(0,0,0,0.18); }
+.modal-textarea:focus { outline: 1px dotted var(--dark); outline-offset: 4px; }
+.modal-field-label {
+  font-family: var(--fontbody);
+  font-size: var(--font12px);
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+.modal-input {
+  width: 100%;
+  background-color: var(--tanbg);
+  border: none;
+  color: var(--dark);
+  font-family: var(--fontbody);
+  font-size: var(--font15px);
+  letter-spacing: .1em;
+  padding: 5px 6px;
+  height: 2.5em;
+  margin-bottom: 6px;
+}
+.modal-input::placeholder { color: var(--dark-fader); line-height: 2.5; }
+.modal-input:focus { outline: 1px dotted var(--dark); outline-offset: 4px; }
+.modal-submit {
+  font-family: var(--fontbody);
+  color: var(--dark);
+  font-size: 14px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--dark);
+  padding: 3px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.modal-submit:hover {
+  background-color: var(--dark);
+  color: var(--colorwhite);
+}
+.modal-success {
+  display: none;
+  text-align: center;
+  padding: 40px;
+}
+
+/* === CONTACT === */
+.contact-content {
+  flex: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+}
+.contact-body {
+  text-align: center;
+}
+.contact-receptionist {
+  font-size: var(--font15px);
+  padding-bottom: 17px;
+}
+/* Desktop: show plain text, hide clickable */
+.contact-email-desktop { display: block; text-align: center; }
+.contact-email-mobile { display: none; text-align: center; }
+.contact-phone-desktop { display: block; text-align: center; }
+.contact-phone-mobile { display: none; text-align: center; }
+
+/* === FOOTER === */
+.footer-light {
+  height: auto;
+  margin-top: auto;
+  padding: 10px 0 20px;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 6px;
+  text-align: center;
+}
+.footer-text {
+  letter-spacing: .05em;
+  font-size: 10px;
+  font-weight: 400;
+  position: relative;
+  top: -5px;
+}
+.footer-logo { width: 50px; }
+
+/* ================================================ */
+/* === TABLET (max-width: 991px) === */
+/* ================================================ */
+@media screen and (max-width: 991px) {
+  .footer-light {
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    display: flex;
+  }
+  .footer { margin-bottom: 20px; }
+  .footer-text { top: -4px; }
+}
+
+/* ================================================ */
+/* === MOBILE (max-width: 767px) === */
+/* ================================================ */
+@media screen and (max-width: 767px) {
+  body {
+    background-image: none;
+  }
+  body.home-bg {
+    background-color: var(--backgroundcolor);
+    background-image: url("assets/bg-mobile.jpg");
+    background-position: 0 0;
+    background-size: cover;
+  }
+
+  a { font-weight: 600; }
+
+  /* Nav: show combined Hours/Location, hide separate */
+  .navlink.hrsloc { display: block; }
+  .navlink.hrs, .navlink.loc { display: none; }
+
+  /* Home */
+  .home-content { height: 100vh; }
+  .home-illustration { max-width: 75%; margin-bottom: 13px; }
+  .home-illustration-wrap {
+    width: 100%;
+    max-width: 450px;
+    margin-bottom: 13px;
+  }
+  .home-logo { max-width: 85%; }
+  .home-logo { max-width: 85%; }
+  .home-address-desktop { display: none; }
+  .home-address-mobile { display: block; }
+  .home-instagram { display: none; }
+  .home-instagram-mobile { display: block; }
+  .home-mobile-buttons { display: flex; }
+
+  /* Keep nav bar but hide the top reservations button on mobile (use home buttons instead) */
+  .btn-reservations-top { display: none; }
+
+  /* Menu */
+  .menu-page-wrap {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 4rem;
+    padding-left: 37px;
+    padding-right: 37px;
+  }
+  .menu-header-inner {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 30px;
+  }
+  .menu-item-line {
+    padding: 5px;
+    line-height: 1.3;
+  }
+  .menu-item-name {
+    font-size: var(--font14px);
+    display: block;
+    padding-bottom: 0;
+  }
+  .menu-item-desc {
+    font-size: var(--font14px);
+    margin-left: 0;
+    line-height: 1;
+  }
+  .menu-items.last { margin-bottom: 50px; }
+
+  /* Centered pages */
+  .centered-page, .centered-page.narrow {
+    padding-top: var(--distance-from-nav);
+    justify-content: flex-start;
+    margin-top: 0;
+    gap: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .centered-header-img.dining-hours { max-width: 220px; }
+  .centered-underline { width: 57px; height: 3px; }
+
+  /* Private events */
+  .pe-content {
+    padding-top: var(--distance-from-nav);
+    justify-content: flex-start;
+  }
+
+  /* Contact */
+  .contact-content {
+    padding-top: var(--distance-from-nav);
+    justify-content: flex-start;
+  }
+  .contact-email-desktop { display: none; }
+  .contact-email-mobile { display: block; }
+  .contact-phone-desktop { display: none; }
+  .contact-phone-mobile { display: block; }
+
+  /* Footer */
+  .footer-text { font-size: var(--font9px); }
+  .footer-logo { position: relative; bottom: -5px; }
+
+  /* Modal */
+  .modal-content { width: 81vw; }
+
+  /* Buttons */
+  .btn-reservations-nav { display: none; }
+  .btn-reservations-top { display: none; }
+}
+
+/* ================================================ */
+/* === SMALL MOBILE (max-width: 479px) === */
+/* ================================================ */
+@media screen and (max-width: 479px) {
+  body.home-bg {
+    background-color: #e6e2de;
+    background-image: url("assets/bg-mobile.jpg");
+    background-size: cover;
+  }
+
+  .menu-page-wrap {
+    padding-left: 37px;
+    padding-right: 37px;
+    max-width: 500px;
+  }
+  .menu-header-inner {
+    padding-left: 24px;
+    padding-right: 28px;
+  }
+  .menu-header-img { max-width: 350px; margin-left: -5px; }
+  .menu-items.last { margin-bottom: 40px; }
+
+  .centered-page {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .pe-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .modal-content { width: 90vw; }
+}
+/* ── Overlay Tool (QA comparison) ───────────── */
+
+#overlay-panel {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  background: #1e1e1e;
+  color: #bbb;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font: 11px/1.8 system-ui, -apple-system, sans-serif;
+  z-index: 9999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  min-width: 210px;
+  user-select: none;
+}
+
+#overlay-panel summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #eee;
+  font-size: 12px;
+  outline: none;
+}
+
+#overlay-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+}
+
+#overlay-options label {
+  display: grid;
+  grid-template-columns: 52px 1fr 36px;
+  align-items: center;
+  gap: 6px;
+}
+
+#overlay-options input[type="range"] {
+  width: 100%;
+  accent-color: #888;
+}
+
+#overlay-options span {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #999;
+  font-size: 10px;
+}
+
+#overlay-options select {
+  background: #333;
+  color: #ccc;
+  border: 1px solid #555;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.overlay-hint {
+  color: #666;
+  font-size: 9px;
+  margin-top: 6px;
+  border-top: 1px solid #333;
+  padding-top: 5px;
+}
+
+.overlay-hint kbd {
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 2px;
+  padding: 0 3px;
+  font-size: 9px;
+}
+
+#overlay-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: none;
+  transform-origin: top left;
+  width: 1440px;
+  image-rendering: auto;
+}
+
+@media print {
+  .no-print { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== OVERLAY TOOL (QA) ==================== -->
+<details id="overlay-panel" class="no-print">
+  <summary>Webflow Overlay</summary>
+  <div id="overlay-options">
+    <label>
+      On
+      <input type="checkbox" id="overlay-on" style="width:auto">
+      <span></span>
+    </label>
+    <label>
+      Opacity
+      <input type="range" id="overlay-opacity" min="5" max="100" value="40" step="5">
+      <span id="opacity-val">40%</span>
+    </label>
+    <label>
+      Scale
+      <input type="range" id="overlay-scale" min="90" max="110" value="100" step="0.5">
+      <span id="scale-val">100%</span>
+    </label>
+    <label>
+      X
+      <input type="range" id="overlay-x" min="-400" max="400" value="0" step="1">
+      <span id="x-val">0px</span>
+    </label>
+    <label>
+      Y
+      <input type="range" id="overlay-y" min="-400" max="400" value="0" step="1">
+      <span id="y-val">0px</span>
+    </label>
+    <div>
+      <select id="overlay-src">
+        <option value="">— select reference —</option>
+        <option value="assets/reference/webflow-home.png">Home</option>
+        <option value="assets/reference/webflow-hours-location.png">Hours / Location</option>
+        <option value="assets/reference/webflow-private-events.png">Private Events</option>
+        <option value="assets/reference/webflow-contact.png">Contact</option>
+      </select>
+    </div>
+    <div style="margin-top:4px">
+      <label style="display:block;grid-template-columns:none">
+        <input type="file" id="overlay-file" accept="image/*" style="width:100%;font-size:10px">
+      </label>
+    </div>
+  </div>
+  <div class="overlay-hint">Toggle On · <kbd>O</kbd> to toggle · dbl-click slider to reset</div>
+</details>
+<img id="overlay-img" class="no-print" alt="">
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar">
+  <div class="nav-wrapper">
+    <a id="btn-res-top" href="https://resy.com/cities/woodcliff-lake-nj-nj/venues/adelaide-nj?date=2026-02-03&seats=2" target="_blank" class="btn-reservations-top">RESERVATIONS</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <img src="assets/hamburger.svg" alt="Menu">
+    </button>
+  </div>
+</nav>
+
+<!-- Nav overlay (click to close) -->
+<div class="nav-overlay" id="nav-overlay"></div>
+
+<!-- Slide-in nav menu -->
+<div class="nav-menu" id="slide-nav">
+  <a href="https://resy.com/cities/woodcliff-lake-nj-nj/venues/adelaide-nj?date=2026-02-03&seats=2" target="_blank" class="btn-reservations-nav">RESERVATIONS</a>
+  <a href="#home" class="navlink" data-page="home">HOME</a>
+  <a href="#menu" class="navlink" data-page="menu">Menu</a>
+  <a href="#hours-location" class="navlink hrsloc" data-page="hours-location">Hours / Location</a>
+  <a href="#dining-hours" class="navlink hrs" data-page="dining-hours">Hours</a>
+  <a href="#our-location" class="navlink loc" data-page="our-location">Location</a>
+  <a href="#private-events" class="navlink" data-page="private-events">Private Events</a>
+  <a href="#contact" class="navlink" data-page="contact">Contact</a>
+  <img src="assets/nav-underline.png" alt="" class="nav-underline">
+  <div class="nav-instagram-wrap">
+    <a href="https://www.instagram.com/here_at_adelaide/" target="_blank"><img src="assets/instagram-icon.png" alt="Instagram" class="nav-instagram"></a>
+  </div>
+</div>
+
+<!-- ==================== HOME ==================== -->
+<div class="page active" id="page-home">
+  <div class="home-content">
+    <div class="home-illustration-wrap">
+      <img src="assets/illustration.svg" alt="Adelaide Restaurant Illustration" class="home-illustration">
+      <img src="assets/logo.png" alt="Adelaide" class="home-logo" srcset="assets/logo-500.png 500w, assets/logo.png 1411w" sizes="(max-width: 767px) 85vw, 706px">
+    </div>
+    <a href="https://maps.app.goo.gl/xZUJTaRvq4rSDq1i8" target="_blank" class="home-address-mobile">42 Kinderkamack Rd. Woodcliff Lake, NJ</a>
+    <p class="home-address-desktop">42 Kinderkamack Rd. Woodcliff Lake, NJ</p>
+    <a href="http://instagram.com/here_at_adelaide/" target="_blank" class="home-instagram">@here_at_adelaide</a>
+
+    <div class="home-mobile-buttons">
+      <a href="https://resy.com/cities/woodcliff-lake-nj-nj/venues/adelaide-nj?date=2026-02-03&seats=2" target="_blank" class="btn-mobile-home">RESERVATIONS</a>
+      <a href="#menu" class="btn-mobile-home" data-page="menu">Menu</a>
+      <a href="#hours-location" class="btn-mobile-home" data-page="hours-location">HOURS / LOCATION</a>
+      <a href="#private-events" class="btn-mobile-home" data-page="private-events">PRIVATE EVENTS</a>
+      <a href="#contact" class="btn-mobile-home" data-page="contact">CONTACT</a>
+    </div>
+    <div class="home-instagram-mobile">
+      <a href="http://instagram.com/here_at_adelaide/" target="_blank">@here_at_adelaide</a>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MENU ==================== -->
+<div class="page" id="page-menu">
+  <div class="menu-page-wrap">
+    <div class="menu-header-wrap">
+      <div class="menu-header-inner">
+        <img src="assets/menu-header.png" alt="Menu" class="menu-header-img"
+          srcset="assets/menu-header-500.png 500w, assets/menu-header-800.png 800w, assets/menu-header.png 2377w"
+          sizes="(max-width: 767px) 300px, 305px">
+      </div>
+    </div>
+
+    <div class="menu-sections">
+      <!-- Starters -->
+      <div class="menu-section-header">
+        <div class="menu-section-title">Starters</div>
+        <div class="menu-underline starters"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">House Sourdough Focaccia </span><span class="menu-item-desc">w. evoo </span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Stracciatella</span><span class="menu-item-desc">w. rhubarb jam, country ham</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Red Frill Mustard Greens </span><span class="menu-item-desc">w. unripe strawberries, caperberries, blood orange</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Little Gem Salad</span><span class="menu-item-desc">w. leek dressing, snap peas, horseradish </span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Broccoli Di Ciccio</span><span class="menu-item-desc">w. white bean purée, crispy onion, sherry</span></div></div>
+      </div>
+
+      <!-- Pasta -->
+      <div class="menu-section-header">
+        <div class="menu-section-title">PASTA</div>
+        <div class="menu-underline pasta"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Tagliatelle </span><span class="menu-item-desc">w. mint, lemon breadcrumbs, valley shepherd creamery "soprano"</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Short Rib Agnolotti </span><span class="menu-item-desc">w. bordelaise, 24-month parmigiano reggiano</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Ravioli</span><span class="menu-item-desc">w. ricotta impastata, chili, 24-month parmigiano reggiano</span></div></div>
+      </div>
+
+      <!-- Mains -->
+      <div class="menu-section-header">
+        <div class="menu-section-title">MainS</div>
+        <div class="menu-underline mains"></div>
+      </div>
+      <div class="menu-items last">
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Roasted Monkfish</span><span class="menu-item-desc">w. dandelion greens, carrot purée, orange</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Beef Denver Steak</span><span class="menu-item-desc">w. marinated leeks, pommes purée, sauce bordelaise</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Goffle Road Half Roast Chicken </span><span class="menu-item-desc">w. castelfranco lettuce, rosé vinaigrette</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">40-Day Dry Age Double-Cut Pork Chop</span><span class="menu-item-desc">w. white asparagus, kumquat, pork jus</span></div></div>
+        <div class="menu-item"><div class="menu-item-line"><span class="menu-item-name">Whole Branzino</span><span class="menu-item-desc">w. garbanzo beans, celery root purée, molasses</span></div></div>
+      </div>
+
+      <!-- Footnote -->
+      <div class="menu-footnote">
+        <div class="menu-item"><div class="menu-item-line">*<strong>Specialty Drinks &amp; Seasonal Desserts</strong> <span class="menu-item-desc">available in-house</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== HOURS/LOCATION (combined) ==================== -->
+<div class="page" id="page-hours-location">
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="hrs-loc-section">
+      <img src="assets/header-dining-hours.png" alt="Dining Hours" class="centered-header-img dining-hours"
+        srcset="assets/header-dining-hours-500.png 500w, assets/header-dining-hours.png 2638w"
+        sizes="(max-width: 767px) 80vw, 500px">
+      <div class="centered-hours">
+        Sunday &amp; Monday <strong>Closed</strong><br>
+        Tuesday to Thursday <strong>5-10pm</strong><br>
+        Friday &amp; Saturday <strong>5-11pm</strong>
+      </div>
+    </div>
+    <div class="hrs-loc-section">
+      <img src="assets/header-location.png" alt="Our Location" class="centered-header-img location"
+        srcset="assets/header-location-500.png 500w, assets/header-location.png 2167w"
+        sizes="(max-width: 767px) 80vw, 500px">
+      <div class="centered-address">
+        We are located at <a href="https://maps.app.goo.gl/tEoha4jmdHwZu3GF6" target="_blank">42 Kinderkamack Rd. Woodcliff Lake, NJ.</a>
+      </div>
+      <div class="centered-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3015.1!2d-74.0652!3d41.0234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e7b5a0e8e1c7%3A0x1234567890abcdef!2s42%20Kinderkamack%20Rd%2C%20Woodcliff%20Lake%2C%20NJ%2007677!5e0!3m2!1sen!2sus!4v1234567890" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DINING HOURS (standalone) ==================== -->
+<div class="page" id="page-dining-hours">
+  <div class="centered-page narrow">
+    <img src="assets/header-dining-hours.png" alt="Dining Hours" class="centered-header-img dining-hours"
+      srcset="assets/header-dining-hours-500.png 500w, assets/header-dining-hours.png 2638w"
+      sizes="(max-width: 767px) 80vw, 500px">
+    <div class="centered-body">
+      <div class="centered-tagline">Here at Adelaide we are open 5 days a week.</div>
+      <img src="assets/underline-main.png" alt="" class="centered-underline"
+        srcset="assets/underline-main-500.png 500w, assets/underline-main.png 1019w"
+        sizes="57px">
+      <div class="centered-hours">
+        Sunday &amp; Monday <strong>Closed</strong><br>
+        Tuesday to Thursday <strong>5-10pm</strong><br>
+        Friday &amp; Saturday <strong>5-11pm</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== OUR LOCATION (standalone) ==================== -->
+<div class="page" id="page-our-location">
+  <div class="centered-page">
+    <img src="assets/header-location.png" alt="Our Location" class="centered-header-img location"
+      srcset="assets/header-location-500.png 500w, assets/header-location.png 2167w"
+      sizes="(max-width: 767px) 80vw, 500px">
+    <div class="centered-body">
+      <div class="centered-tagline">Join us at the corner of Kinderkamack and Prospect — we look forward to welcoming you.</div>
+      <img src="assets/underline-main.png" alt="" class="centered-underline"
+        srcset="assets/underline-main-500.png 500w, assets/underline-main.png 1019w"
+        sizes="57px">
+      <div class="centered-address">
+        <a href="https://maps.app.goo.gl/tEoha4jmdHwZu3GF6" target="_blank">42 Kinderkamack Rd. Woodcliff Lake, NJ.</a>
+      </div>
+      <div class="centered-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3015.1!2d-74.0652!3d41.0234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e7b5a0e8e1c7%3A0x1234567890abcdef!2s42%20Kinderkamack%20Rd%2C%20Woodcliff%20Lake%2C%20NJ%2007677!5e0!3m2!1sen!2sus!4v1234567890" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PRIVATE EVENTS ==================== -->
+<div class="page" id="page-private-events">
+  <div class="pe-content">
+    <img src="assets/header-private-events.png" alt="Private Events" class="centered-header-img private-events"
+      srcset="assets/header-private-events-500.png 500w, assets/header-private-events-800.png 800w, assets/header-private-events.png 2729w"
+      sizes="(max-width: 767px) 80vw, 500px">
+    <div class="pe-tagline">Here at Adelaide we're ready for whatever the occasion.</div>
+    <img src="assets/underline-main.png" alt="" class="pe-underline"
+      srcset="assets/underline-main-500.png 500w, assets/underline-main.png 1019w"
+      sizes="57px">
+    <p class="pe-description">Our first-floor raised dining area can host larger parties while our <strong>Upstairs</strong> can accommodate intimate gatherings, seating 16 guests for dinners or up to 30 guests for cocktail-style receptions.</p>
+    <button class="btn-inquire" id="btn-inquire">INQUIRE</button>
+  </div>
+
+  <!-- Inquiry Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content" id="modal-content">
+      <div class="modal-header">
+        <span class="modal-to">to:</span>
+        <img src="assets/logo-brown-thin.svg" alt="Adelaide" class="modal-logo">
+        <button class="modal-close" id="modal-close">+</button>
+      </div>
+      <form class="modal-form" id="inquiry-form">
+        <textarea class="modal-textarea" name="message" placeholder="your message" required></textarea>
+        <label class="modal-field-label">from:</label>
+        <input type="text" class="modal-input" name="name" placeholder="name" required>
+        <input type="email" class="modal-input" name="email" placeholder="email" required>
+        <button type="submit" class="modal-submit">SEND</button>
+      </form>
+      <div class="modal-success" id="modal-success">
+        <img src="assets/stamp-success.png" alt="Thank you" style="max-width: 200px; margin: 0 auto;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CONTACT ==================== -->
+<div class="page" id="page-contact">
+  <div class="contact-content">
+    <img src="assets/header-contact.png" alt="Contact Us" class="centered-header-img contact"
+      srcset="assets/header-contact-500.png 500w, assets/header-contact.png 1741w"
+      sizes="(max-width: 767px) 80vw, 260px">
+    <div class="contact-body">
+      <div class="contact-receptionist">Our Receptionist is here to help you Tuesday-Saturday from 3-5pm.</div>
+      <!-- Desktop: plain text, not clickable -->
+      <div class="contact-email-desktop">Email <a href="mailto:info@adelaidenj.com">info@adelaidenj.com</a></div>
+      <!-- Mobile: clickable email -->
+      <div class="contact-email-mobile">Email: <strong>info@adelaidenj.com</strong></div>
+      <!-- Desktop: plain text -->
+      <div class="contact-phone-desktop" style="margin-top: 8px;">Phone: 201.299.2299</div>
+      <!-- Mobile: clickable phone -->
+      <div class="contact-phone-mobile" style="margin-top: 8px;">Phone: <a href="tel:12012992299">201.299.2299</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer-light">
+  <div class="footer">
+    <span class="footer-text">&copy;2026 Adelaide NJ</span>
+    <a href="#home" data-page="home"><img src="assets/logo-a.svg" alt="Adelaide" class="footer-logo"></a>
+    <span class="footer-text">All Rights Reserved.</span>
+  </div>
+</footer>
+
+<script>
+/* === Routing === */
+const pages = ['home','menu','hours-location','dining-hours','our-location','private-events','contact'];
+
+function navigate(page) {
+  if (!pages.includes(page)) page = 'home';
+  pages.forEach(p => {
+    const el = document.getElementById('page-' + p);
+    if (el) el.classList.toggle('active', p === page);
+  });
+  // Update active nav
+  document.querySelectorAll('.navlink[data-page]').forEach(link => {
+    link.classList.toggle('active', link.dataset.page === page);
+  });
+  // Home background
+  document.body.classList.toggle('home-bg', page === 'home');
+  // Update title
+  const titles = {
+    'home': 'Adelaide Restaurant | Woodcliff Lake, NJ Dining',
+    'menu': "Today's Menu | Adelaide NJ Restaurant",
+    'hours-location': 'Hours & Location | Adelaide NJ Restaurant',
+    'dining-hours': 'Dining Hours | Adelaide NJ Restaurant',
+    'our-location': 'Adelaide Location | Woodcliff Lake, NJ',
+    'private-events': 'Private Events at Adelaide NJ | Woodcliff Lake',
+    'contact': 'Contact Adelaide NJ | Restaurant Reservations & Inquiries'
+  };
+  document.title = titles[page] || titles.home;
+  // Close mobile nav
+  closeMobileNav();
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
+
+function getPageFromHash() {
+  const hash = location.hash.slice(1);
+  return pages.includes(hash) ? hash : 'home';
+}
+
+window.addEventListener('hashchange', () => navigate(getPageFromHash()));
+window.addEventListener('DOMContentLoaded', () => navigate(getPageFromHash()));
+
+// Nav link clicks
+document.querySelectorAll('[data-page]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const page = link.dataset.page;
+    if (page) {
+      location.hash = page;
+    }
+  });
+});
+
+/* === Mobile Nav === */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('slide-nav');
+const navOverlay = document.getElementById('nav-overlay');
+const btnResTop = document.getElementById('btn-res-top');
+
+function openMobileNav() {
+  mobileNav.classList.add('open');
+  navOverlay.classList.add('open');
+  if (btnResTop) btnResTop.classList.add('menopen');
+}
+
+function closeMobileNav() {
+  mobileNav.classList.remove('open');
+  navOverlay.classList.remove('open');
+  if (btnResTop) btnResTop.classList.remove('menopen');
+}
+
+hamburger.addEventListener('click', () => {
+  if (mobileNav.classList.contains('open')) {
+    closeMobileNav();
+  } else {
+    openMobileNav();
+  }
+});
+
+navOverlay.addEventListener('click', closeMobileNav);
+
+// Close nav on navlink click
+mobileNav.querySelectorAll('.navlink').forEach(link => {
+  link.addEventListener('click', closeMobileNav);
+});
+
+/* === Inquiry Modal === */
+const btnInquire = document.getElementById('btn-inquire');
+const modalOverlay = document.getElementById('modal-overlay');
+const modalContent = document.getElementById('modal-content');
+const modalClose = document.getElementById('modal-close');
+const inquiryForm = document.getElementById('inquiry-form');
+const modalSuccess = document.getElementById('modal-success');
+
+btnInquire.addEventListener('click', () => {
+  modalOverlay.classList.add('open');
+});
+
+modalClose.addEventListener('click', () => {
+  modalOverlay.classList.remove('open');
+});
+
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) {
+    modalOverlay.classList.remove('open');
+  }
+});
+
+// Prevent modal content clicks from closing
+modalContent.addEventListener('click', (e) => e.stopPropagation());
+
+inquiryForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // Show success
+  inquiryForm.style.display = 'none';
+  modalSuccess.style.display = 'block';
+  // Auto-close after 2.2s
+  setTimeout(() => {
+    modalOverlay.classList.remove('open');
+    // Reset
+    setTimeout(() => {
+      inquiryForm.style.display = 'block';
+      modalSuccess.style.display = 'none';
+      inquiryForm.reset();
+    }, 300);
+  }, 2200);
+});
+
+/* === Overlay Tool === */
+(function() {
+  const img = document.getElementById('overlay-img');
+  const el = id => document.getElementById(id);
+  const panel = el('overlay-panel');
+  const toggle = el('overlay-on');
+  const opSlider = el('overlay-opacity');
+  const scSlider = el('overlay-scale');
+  const xSlider = el('overlay-x');
+  const ySlider = el('overlay-y');
+  const srcSelect = el('overlay-src');
+  const fileInput = el('overlay-file');
+
+  // Page-to-reference mapping (auto-select on navigation)
+  const refMap = {
+    'home': 'assets/reference/webflow-home.png',
+    'hours-location': 'assets/reference/webflow-hours-location.png',
+    'dining-hours': 'assets/reference/webflow-hours-location.png',
+    'our-location': 'assets/reference/webflow-hours-location.png',
+    'private-events': 'assets/reference/webflow-private-events.png',
+    'contact': 'assets/reference/webflow-contact.png'
+  };
+
+  function update() {
+    const on = toggle.checked;
+    const opacity = opSlider.value;
+    const scale = scSlider.value / 100;
+    const x = xSlider.value;
+    const y = ySlider.value;
+
+    img.style.display = on && img.src ? 'block' : 'none';
+    img.style.opacity = opacity / 100;
+    img.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
+
+    el('opacity-val').textContent = opacity + '%';
+    el('scale-val').textContent = scSlider.value + '%';
+    el('x-val').textContent = x + 'px';
+    el('y-val').textContent = y + 'px';
+  }
+
+  function loadRef(src) {
+    if (!src) { img.style.display = 'none'; return; }
+    img.src = src;
+    update();
+  }
+
+  // Controls
+  toggle.addEventListener('change', update);
+  opSlider.addEventListener('input', update);
+  scSlider.addEventListener('input', update);
+  xSlider.addEventListener('input', update);
+  ySlider.addEventListener('input', update);
+
+  // Select reference
+  srcSelect.addEventListener('change', () => loadRef(srcSelect.value));
+
+  // File input (drag/drop any screenshot)
+  fileInput.addEventListener('change', () => {
+    const f = fileInput.files[0];
+    if (!f) return;
+    const url = URL.createObjectURL(f);
+    img.src = url;
+    srcSelect.value = '';
+    if (!toggle.checked) toggle.checked = true;
+    update();
+  });
+
+  // Double-click to reset sliders
+  scSlider.addEventListener('dblclick', () => { scSlider.value = 100; update(); });
+  xSlider.addEventListener('dblclick', () => { xSlider.value = 0; update(); });
+  ySlider.addEventListener('dblclick', () => { ySlider.value = 0; update(); });
+  opSlider.addEventListener('dblclick', () => { opSlider.value = 40; update(); });
+
+  // Keyboard shortcut: O to toggle overlay
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+    if (e.key === 'o' || e.key === 'O') {
+      toggle.checked = !toggle.checked;
+      update();
+    }
+  });
+
+  // Auto-select reference on page navigation
+  const origNavigate = window.navigate || navigate;
+  const patchedNavigate = function(page) {
+    origNavigate(page);
+    const ref = refMap[page];
+    if (ref && panel.open) {
+      srcSelect.value = ref;
+      loadRef(ref);
+    }
+  };
+  // Patch the hashchange listener
+  window.addEventListener('hashchange', () => {
+    const page = location.hash.slice(1);
+    const ref = refMap[page];
+    if (ref && panel.open && toggle.checked) {
+      srcSelect.value = ref;
+      loadRef(ref);
+    }
+  });
+
+  // Drag support
+  let dragging = false, dragX, dragY, startOX, startOY;
+  img.addEventListener('pointerdown', e => {
+    if (!toggle.checked) return;
+    dragging = true;
+    dragX = e.clientX;
+    dragY = e.clientY;
+    startOX = parseFloat(xSlider.value);
+    startOY = parseFloat(ySlider.value);
+    img.style.pointerEvents = 'auto';
+    img.style.cursor = 'grabbing';
+    img.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  img.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    xSlider.value = Math.round(startOX + e.clientX - dragX);
+    ySlider.value = Math.round(startOY + e.clientY - dragY);
+    update();
+  });
+  img.addEventListener('pointerup', () => {
+    dragging = false;
+    img.style.pointerEvents = 'none';
+    img.style.cursor = '';
+  });
+})();
+</script>
+</body>
+</html>
